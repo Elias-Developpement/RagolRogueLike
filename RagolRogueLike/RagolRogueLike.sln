@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagolRogueLike", "RagolRogueLike\RagolRogueLike.csproj", "{047F7DB3-C62D-43F4-A0D0-9CE72642A6AD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0038BBB5-FA8A-4EF9-A151-B4D8FF6416CA} = {0038BBB5-FA8A-4EF9-A151-B4D8FF6416CA}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagolEngine", "..\..\RagolEngine\RagolEngine\RagolEngine\RagolEngine.csproj", "{0038BBB5-FA8A-4EF9-A151-B4D8FF6416CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{047F7DB3-C62D-43F4-A0D0-9CE72642A6AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{047F7DB3-C62D-43F4-A0D0-9CE72642A6AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{047F7DB3-C62D-43F4-A0D0-9CE72642A6AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{047F7DB3-C62D-43F4-A0D0-9CE72642A6AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0038BBB5-FA8A-4EF9-A151-B4D8FF6416CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0038BBB5-FA8A-4EF9-A151-B4D8FF6416CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0038BBB5-FA8A-4EF9-A151-B4D8FF6416CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0038BBB5-FA8A-4EF9-A151-B4D8FF6416CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
