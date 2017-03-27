@@ -21,8 +21,11 @@ namespace RagolRogueLike.GameScreens
 
         Engine engine;
         Player player;
+        SpriteFont EntityFont;
 
         Game1 gameRef;
+
+        Tile[,] testMap;
 
         #endregion
 
@@ -51,8 +54,9 @@ namespace RagolRogueLike.GameScreens
         protected override void LoadContent()
         {
             ContentManager Content = Game.Content;
-            SpriteFont EntityFont = Content.Load<SpriteFont>(@"Fonts\EntityFont");
-            player = new Player("@", Color.White, EntityFont, new Vector2(0, 0));
+            EntityFont = Content.Load<SpriteFont>(@"Fonts\EntityFont");
+            player = new Player("@", Color.White, EntityFont, new Vector2(16, 16));
+            CreateTestMap();
 
             base.LoadContent();
         }
@@ -69,10 +73,39 @@ namespace RagolRogueLike.GameScreens
             //SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null ,null, null, player.Camera.Transformation
             GameRef.spriteBatch.Begin();
 
+            for (int x = 0; x < 50; x++)
+            {
+                for (int y = 0; y < 50; y++)
+                {
+                    GameRef.spriteBatch.DrawString(EntityFont, testMap[x, y].Symbol, testMap[x, y].Position, testMap[x, y].Color);
+                }
+            }
+
             player.Draw(GameRef.spriteBatch, gameTime);
             base.Draw(gameTime);
 
             GameRef.spriteBatch.End();
+        }
+
+        private void CreateTestMap()
+        {
+            //TODO: Start on collision detection for the player.
+            testMap = new Tile[50, 50];
+
+            for (int x = 0; x < 50; x++)
+            {
+                for (int y = 0; y < 50; y++)
+                {
+                    if (x == 0 || x == 49 || y == 0 || y == 49)
+                    {
+                        testMap[x, y] = new Tile("#", true, Color.White, new Vector2(x * 16, y * 16));
+                    }
+                    else
+                    {
+                        testMap[x, y] = new Tile(".", false, Color.White, new Vector2(x * 16, y * 16));
+                    }
+                }
+            }
         }
 
         #endregion

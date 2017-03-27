@@ -20,9 +20,6 @@ namespace RagolRogueLike.TileEngine
         Vector2 position;
         Rectangle positionRec;
 
-        //An offset to make collisions look better
-        int collisionRadius = 8;
-
         public string Symbol
         {
             get { return symbol; }
@@ -49,6 +46,11 @@ namespace RagolRogueLike.TileEngine
             get { return block; }
         }
 
+        public Color Color
+        {
+            get { return color; }
+        }
+
         #endregion
 
         #region Constructor Region
@@ -67,7 +69,7 @@ namespace RagolRogueLike.TileEngine
 
         private void setPositionRec()
         {
-            positionRec = new Rectangle((int)position.X * Engine.TileWidth + collisionRadius, (int)position.Y * Engine.TileHeight, Engine.TileWidth - collisionRadius, Engine.TileHeight - 2 * collisionRadius);
+            positionRec = new Rectangle((int)position.X * Engine.TileWidth, (int)position.Y * Engine.TileHeight, Engine.TileWidth, Engine.TileHeight);
         }
 
         #endregion
