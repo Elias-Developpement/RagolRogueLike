@@ -120,7 +120,7 @@ namespace RagolRogueLike.GameScreens
 
             if (sender == loadGame)
             {
-                //StateManager.PushState(GameRef.gamePlayScreen);
+                StateManager.PushState(GameRef.gamePlayScreen);
             }
 
             if (sender == exitGame)

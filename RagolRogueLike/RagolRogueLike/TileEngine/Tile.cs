@@ -13,9 +13,8 @@ namespace RagolRogueLike.TileEngine
     {
         #region Fields and Properties
 
-        int tileIndex;
-        int tileset;
-
+        string symbol;
+        Color color;
         bool block;
 
         Vector2 position;
@@ -24,14 +23,9 @@ namespace RagolRogueLike.TileEngine
         //An offset to make collisions look better
         int collisionRadius = 8;
 
-        public int TileIndex
+        public string Symbol
         {
-            get { return tileIndex; }
-        }
-
-        public int Tileset
-        {
-            get { return tileset; }
+            get { return symbol; }
         }
 
         public Vector2 Position
@@ -59,11 +53,12 @@ namespace RagolRogueLike.TileEngine
 
         #region Constructor Region
 
-        public Tile(int tileindex, int tileSet, bool block)
+        public Tile(string symbol, bool block, Color color, Vector2 position)
         {
-            tileIndex = tileindex;
-            tileset = tileSet;
+            this.symbol = symbol;
             this.block = block;
+            this.color = color;
+            this.position = position;
         }
 
         #endregion

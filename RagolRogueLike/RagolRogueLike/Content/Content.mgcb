@@ -20,3 +20,10 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/ControlFont.spritefont
 
+#begin Fonts/EntityFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/EntityFont.spritefont
+

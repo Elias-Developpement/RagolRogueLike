@@ -39,8 +39,9 @@ namespace RagolRogueLike.PathFinding
         {
             //Need to decide on size of nodes instead of using every single pixel
             //For now divide every tile into a 4x4 grid of 8x8 pixel nodes
-            mapWidth = Map.MapWidthInPixels / numberNodesInTile;
-            mapHeight = Map.MapHeightInPixels / numberNodesInTile;
+            //TODO: Get the map width and height before trying to use pathfinder
+            //mapWidth = Map.MapWidthInPixels / numberNodesInTile;
+            //mapHeight = Map.MapHeightInPixels / numberNodesInTile;
 
             InitializeSearchNodes(map);
         }
@@ -65,14 +66,15 @@ namespace RagolRogueLike.PathFinding
                     node.Position = new Point(x * numberNodesInTile, y * numberNodesInTile);
 
                     //Only store nodes that are walkable
-                    foreach (Tile tile in Map.BlockedTiles)
+                    //TODO: Uncomment before trying to use
+                    /*foreach (Tile tile in Map.BlockedTiles)
                     {
                         if (tile.PositionRectangle.Contains(node.Position))
                         {
                             node.Walkable = false;
                         }
 
-                    }
+                    }*/
 
                     if (node.Walkable)
                     {

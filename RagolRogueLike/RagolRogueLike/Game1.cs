@@ -23,6 +23,7 @@ namespace RagolRogueLike
 
         public TitleScreen titleScreen;
         public StartMenuScreen startMenuScreen;
+        public GamePlayScreen gamePlayScreen;
 
         #endregion
 
@@ -56,6 +57,7 @@ namespace RagolRogueLike
 
             titleScreen = new TitleScreen(this, stateManager);
             startMenuScreen = new StartMenuScreen(this, stateManager);
+            gamePlayScreen = new GamePlayScreen(this, stateManager);
 
             stateManager.ChangeState(titleScreen);
         }
