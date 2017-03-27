@@ -2,19 +2,65 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using RagolRogueLike.GameStates;
+using RagolRogueLike.GameScreens;
+
 namespace RagolRogueLike
 {
     
     public class Game1 : Game
     {
+        #region Monogame Field Region
+
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        
+        public SpriteBatch spriteBatch;
+
+        #endregion
+
+        #region Game State Region
+
+        GameStateManager stateManager;
+
+        public TitleScreen titleScreen;
+        public StartMenuScreen startMenuScreen;
+
+        #endregion
+
+        #region Screen Field Region
+
+        const int screenWidth = 1024;
+        const int screenHeight = 768;
+
+        public readonly Rectangle screenRectangle;
+
+        #endregion
+
+        #region Constructor Region
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = screenWidth;
+            graphics.PreferredBackBufferHeight = screenHeight;
+
+            screenRectangle = new Rectangle(0, 0, screenWidth, screenHeight);
+
             Content.RootDirectory = "Content";
+
+            this.IsMouseVisible = true;
+
+            Components.Add(new InputHandler(this));
+
+            stateManager = new GameStateManager(this);
+            Components.Add(stateManager);
+
+            titleScreen = new TitleScreen(this, stateManager);
+            startMenuScreen = new StartMenuScreen(this, stateManager);
+
+            stateManager.ChangeState(titleScreen);
         }
+
+        #endregion
 
         protected override void Initialize()
         {

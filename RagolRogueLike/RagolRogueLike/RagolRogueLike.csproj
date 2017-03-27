@@ -50,6 +50,8 @@
     <Compile Include="Controls\PictureBox.cs" />
     <Compile Include="Controls\ScrollSelector.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="GameScreens\StartMenuScreen.cs" />
+    <Compile Include="GameScreens\TitleScreen.cs" />
     <Compile Include="GameStates\BaseGameState.cs" />
     <Compile Include="GameStates\GameState.cs" />
     <Compile Include="GameStates\GameStateManager.cs" />
