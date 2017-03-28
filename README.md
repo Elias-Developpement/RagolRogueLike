@@ -1,2 +1,2 @@
 # RagolRogueLike
-A roguelike written in C# using Monogame and my game engine
+A roguelike written in C# using Monogame as a test project.
