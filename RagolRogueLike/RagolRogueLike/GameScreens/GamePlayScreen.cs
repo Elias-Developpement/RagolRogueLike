@@ -26,6 +26,9 @@ namespace RagolRogueLike.GameScreens
 
         Game1 gameRef;
 
+        Viewport mapViewport;
+        Viewport guiViewport;
+
         #endregion
 
         #region Property Region
@@ -39,6 +42,8 @@ namespace RagolRogueLike.GameScreens
             gameRef = (Game1)game;
 
             engine = new Engine(16, 16);
+
+            
         }
 
         #endregion
@@ -57,6 +62,10 @@ namespace RagolRogueLike.GameScreens
             player = new Player("@", Color.White, EntityFont, new Vector2(16, 16), GameRef.screenRectangle);
             map = new Map(100, 100, EntityFont);
 
+            mapViewport = GameRef.GraphicsDevice.Viewport;
+            mapViewport.Width = 3 * mapViewport.Width / 4;
+            mapViewport.Height = 7 * mapViewport.Height / 8;
+
             base.LoadContent();
         }
 
@@ -70,6 +79,7 @@ namespace RagolRogueLike.GameScreens
         {
             GameRef.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, player.Camera.Transformation);
 
+            GraphicsDevice.Viewport = mapViewport;
             map.Draw(GameRef.spriteBatch, player.Camera);
             player.Draw(GameRef.spriteBatch, gameTime);
             base.Draw(gameTime);

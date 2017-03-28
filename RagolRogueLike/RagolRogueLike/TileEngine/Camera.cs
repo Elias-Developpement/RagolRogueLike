@@ -125,9 +125,9 @@ namespace RagolRogueLike.TileEngine
 
         public void LockToPlayer(PlayerClasses.Player player)
         {
-            position.X = (player.Position.X + 8) * zoom - (viewportRectangle.Width / 2);
+            position.X = (player.Position.X + 8) * zoom - (3 * viewportRectangle.Width / 8);
 
-            position.Y = (player.Position.Y + 8) * zoom - (viewportRectangle.Height / 2);
+            position.Y = (player.Position.Y + 8) * zoom - (7 * viewportRectangle.Height / 16);
 
             LockCamera();
         }
