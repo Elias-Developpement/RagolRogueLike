@@ -61,6 +61,21 @@ namespace RagolRogueLike.PlayerClasses
 
         public void Update(GameTime gameTime, Map map)
         {
+            camera.Update(gameTime);
+
+            if (InputHandler.KeyReleased(Keys.PageUp))
+            {
+                camera.ZoomIn();
+                if (camera.CameraMode == CameraMode.Follow)
+                    camera.LockToPlayer(this);
+            }
+            else if (InputHandler.KeyReleased(Keys.PageDown))
+            {
+                camera.ZoomOut();
+                if (camera.CameraMode == CameraMode.Follow)
+                    camera.LockToPlayer(this);
+            }
+
             Vector2 motion = new Vector2();
             //Here the motion is set to 16 because the size (including spacing) for symbols is 16.
             if (InputHandler.KeyPressed(Keys.NumPad8) || InputHandler.KeyPressed(Keys.Up))

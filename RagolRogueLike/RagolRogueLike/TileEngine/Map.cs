@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using RagolRogueLike.Entities;
+
 
 
 namespace RagolRogueLike.TileEngine
@@ -19,6 +21,7 @@ namespace RagolRogueLike.TileEngine
         static int mapHeight;
 
         Tile[,] testMap;
+        Entity testEntity;
 
         SpriteFont tileFont;
 
@@ -52,6 +55,11 @@ namespace RagolRogueLike.TileEngine
             //fillBlocked();
         }
 
+        public Map(SpriteFont tileFont)
+        {
+            this.tileFont = tileFont;
+        }
+
 
         #endregion
 
@@ -74,6 +82,7 @@ namespace RagolRogueLike.TileEngine
 
             Rectangle destination = new Rectangle(0, 0, Engine.TileWidth, Engine.TileHeight);
 
+            //TODO: Don't draw tiles that are being occupied.
             for (int y = min.Y; y < max.Y; y++)
             {
                 destination.Y = y * Engine.TileHeight;
@@ -82,7 +91,12 @@ namespace RagolRogueLike.TileEngine
                 {
                     destination.X = x * Engine.TileWidth;
 
-                    spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, testMap[x, y].Color);                  
+                    spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, testMap[x, y].Color);
+
+                    if (x == 5 && y == 5)
+                    {
+                        testEntity.Draw(spriteBatch);
+                    }
                 }
             }
 
@@ -107,6 +121,10 @@ namespace RagolRogueLike.TileEngine
                     {
                         testMap[x, y] = new Tile(".", false, Color.White, new Vector2(x * 16, y * 16));
                     }
+                    if (x == 5 && y == 5)
+                    {
+                        testEntity = new Entity("T", Color.Red, tileFont, new Vector2(x * 16, y * 16));
+                    }
                 }
             }
         }
@@ -114,6 +132,10 @@ namespace RagolRogueLike.TileEngine
         public bool GetBlocked(int x, int y)
         {
             if (testMap[x, y].Block)
+            {
+                return true;
+            }
+            else if (testEntity.Position.X / 16 == x && testEntity.Position.Y / 16 == y && testEntity.Block)
             {
                 return true;
             }
