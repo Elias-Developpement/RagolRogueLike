@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using RagolRogueLike.TileEngine;
+using RagolRogueLike.Entities;
 
 namespace RagolRogueLike.PlayerClasses
 {
@@ -25,6 +26,8 @@ namespace RagolRogueLike.PlayerClasses
         SpriteFont spriteFont;
 
         Camera camera;
+
+        int damage;
 
         #endregion
         
@@ -53,13 +56,15 @@ namespace RagolRogueLike.PlayerClasses
             this.position = position;
 
             camera = new Camera(viewportRect);
+
+            damage = 10;
         }
 
         #endregion
 
         #region Method Region
 
-        public void Update(GameTime gameTime, Map map)
+        public void Update(GameTime gameTime, Map map, Entity entity)
         {
             camera.Update(gameTime);
 
@@ -124,6 +129,10 @@ namespace RagolRogueLike.PlayerClasses
                 {
                     return;
                 }
+                else if (entity.Position == position + motion && entity.Block)
+                {
+                    DealDamage(entity);
+                }
                 else
                 {
                     position += motion;
@@ -136,6 +145,11 @@ namespace RagolRogueLike.PlayerClasses
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.DrawString(spriteFont, symbol, position, color);
+        }
+
+        private void DealDamage(Entity target)
+        {
+            target.TakeDamage(damage);
         }
         
         #endregion

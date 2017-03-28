@@ -12,6 +12,7 @@ using RagolRogueLike.GameStates;
 using RagolRogueLike.Controls;
 using RagolRogueLike.TileEngine;
 using RagolRogueLike.PlayerClasses;
+using RagolRogueLike.Entities;
 
 namespace RagolRogueLike.GameScreens
 {
@@ -22,6 +23,8 @@ namespace RagolRogueLike.GameScreens
         Engine engine;
         Map map;
         Player player;
+        Entity testEntity;
+
         SpriteFont EntityFont;
 
         Game1 gameRef;
@@ -60,6 +63,7 @@ namespace RagolRogueLike.GameScreens
             ContentManager Content = Game.Content;
             EntityFont = Content.Load<SpriteFont>(@"Fonts\EntityFont");
             player = new Player("@", Color.White, EntityFont, new Vector2(16, 16), GameRef.screenRectangle);
+            testEntity = new Entity("T", Color.Green, EntityFont, new Vector2(32, 32));
             map = new Map(100, 100, EntityFont);
 
             mapViewport = GameRef.GraphicsDevice.Viewport;
@@ -71,7 +75,7 @@ namespace RagolRogueLike.GameScreens
 
         public override void Update(GameTime gameTime)
         {
-            player.Update(gameTime, map);
+            player.Update(gameTime, map, testEntity);
             base.Update(gameTime);
         }
 
@@ -81,6 +85,7 @@ namespace RagolRogueLike.GameScreens
 
             GraphicsDevice.Viewport = mapViewport;
             map.Draw(GameRef.spriteBatch, player.Camera);
+            testEntity.Draw(GameRef.spriteBatch);
             player.Draw(GameRef.spriteBatch, gameTime);
             base.Draw(gameTime);
 

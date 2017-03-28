@@ -21,7 +21,6 @@ namespace RagolRogueLike.TileEngine
         static int mapHeight;
 
         Tile[,] testMap;
-        Entity testEntity;
 
         SpriteFont tileFont;
 
@@ -55,6 +54,8 @@ namespace RagolRogueLike.TileEngine
             //fillBlocked();
         }
 
+        //Used to create the next level of the map.
+        //Still needs to be implemented by adding stairs and what not.
         public Map(SpriteFont tileFont)
         {
             this.tileFont = tileFont;
@@ -92,11 +93,6 @@ namespace RagolRogueLike.TileEngine
                     destination.X = x * Engine.TileWidth;
 
                     spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, testMap[x, y].Color);
-
-                    if (x == 5 && y == 5)
-                    {
-                        testEntity.Draw(spriteBatch);
-                    }
                 }
             }
 
@@ -121,10 +117,6 @@ namespace RagolRogueLike.TileEngine
                     {
                         testMap[x, y] = new Tile(".", false, Color.White, new Vector2(x * 16, y * 16));
                     }
-                    if (x == 5 && y == 5)
-                    {
-                        testEntity = new Entity("T", Color.Red, tileFont, new Vector2(x * 16, y * 16));
-                    }
                 }
             }
         }
@@ -132,10 +124,6 @@ namespace RagolRogueLike.TileEngine
         public bool GetBlocked(int x, int y)
         {
             if (testMap[x, y].Block)
-            {
-                return true;
-            }
-            else if (testEntity.Position.X / 16 == x && testEntity.Position.Y / 16 == y && testEntity.Block)
             {
                 return true;
             }

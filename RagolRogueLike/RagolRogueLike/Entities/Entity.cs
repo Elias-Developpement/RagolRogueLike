@@ -24,6 +24,9 @@ namespace RagolRogueLike.Entities
         Vector2 position;
         SpriteFont spriteFont;
 
+        int maxHealth;
+        int currentHealth;
+
         #endregion
 
         #region Property Region
@@ -49,6 +52,9 @@ namespace RagolRogueLike.Entities
             block = true;
             this.spriteFont = spriteFont;
             this.position = position;
+
+            maxHealth = 10;
+            currentHealth = maxHealth;
         }
 
         #endregion
@@ -63,6 +69,25 @@ namespace RagolRogueLike.Entities
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(spriteFont, symbol, position, color);
+        }
+
+        private void CheckHealth()
+        {
+            if (currentHealth <= 0)
+            {
+                color = Color.Red;
+                block = false;
+            }
+            else if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+        }
+
+        public void TakeDamage(int damage)
+        {
+            currentHealth -= damage;
+            CheckHealth();
         }
 
         #endregion
