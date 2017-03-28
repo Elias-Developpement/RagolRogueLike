@@ -25,8 +25,6 @@ namespace RagolRogueLike.GameScreens
         SpriteFont EntityFont;
 
         Game1 gameRef;
-        
-
 
         #endregion
 
@@ -64,7 +62,7 @@ namespace RagolRogueLike.GameScreens
 
         public override void Update(GameTime gameTime)
         {
-            player.Update(gameTime);
+            player.Update(gameTime, map);
             base.Update(gameTime);
         }
 

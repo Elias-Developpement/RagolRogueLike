@@ -59,7 +59,7 @@ namespace RagolRogueLike.PlayerClasses
 
         #region Method Region
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Map map)
         {
             Vector2 motion = new Vector2();
             //Here the motion is set to 16 because the size (including spacing) for symbols is 16.
@@ -102,7 +102,18 @@ namespace RagolRogueLike.PlayerClasses
 
             if (motion != Vector2.Zero)
             {
-                position += motion;
+                int x = ((int)position.X + (int)motion.X) / 16;
+                int y = ((int)position.Y + (int)motion.Y) / 16;
+                
+                if (map.GetBlocked(x, y))
+                {
+                    return;
+                }
+                else
+                {
+                    position += motion;
+                }
+                
                 camera.LockToPlayer(this);
             }
         }

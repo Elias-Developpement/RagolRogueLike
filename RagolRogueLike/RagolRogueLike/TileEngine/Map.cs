@@ -111,6 +111,18 @@ namespace RagolRogueLike.TileEngine
             }
         }
 
+        public bool GetBlocked(int x, int y)
+        {
+            if (testMap[x, y].Block)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
     }
