@@ -119,19 +119,18 @@ namespace RagolRogueLike.TileEngine
 
         private void LockCamera()
         {
-            //TODO: Uncomment before putting camera in the game.
-            //position.X = MathHelper.Clamp(position.X, 0, Map.MapWidthInPixels * zoom - viewportRectangle.Width);
-            //position.Y = MathHelper.Clamp(position.Y, 0, Map.MapHeightInPixels * zoom - viewportRectangle.Height);
+            position.X = MathHelper.Clamp(position.X, 0, Map.MapWidthInPixels * zoom - viewportRectangle.Width);
+            position.Y = MathHelper.Clamp(position.Y, 0, Map.MapHeightInPixels * zoom - viewportRectangle.Height);
         }
 
-        /*public void LockToSprite(AnimatedSprite sprite)
+        public void LockToPlayer(PlayerClasses.Player player)
         {
-            position.X = (sprite.Position.X + sprite.Width / 2) * zoom - (3 * viewportRectangle.Width / 8);
+            position.X = (player.Position.X + 8) * zoom - (viewportRectangle.Width / 2);
 
-            position.Y = (sprite.Position.Y + sprite.Height / 2) * zoom - (viewportRectangle.Height / 2);
+            position.Y = (player.Position.Y + 8) * zoom - (viewportRectangle.Height / 2);
 
             LockCamera();
-        }*/
+        }
 
         public void ZoomIn()
         {

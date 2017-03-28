@@ -20,12 +20,13 @@ namespace RagolRogueLike.GameScreens
         #region Field Region
 
         Engine engine;
+        Map map;
         Player player;
         SpriteFont EntityFont;
 
         Game1 gameRef;
+        
 
-        Tile[,] testMap;
 
         #endregion
 
@@ -55,8 +56,8 @@ namespace RagolRogueLike.GameScreens
         {
             ContentManager Content = Game.Content;
             EntityFont = Content.Load<SpriteFont>(@"Fonts\EntityFont");
-            player = new Player("@", Color.White, EntityFont, new Vector2(16, 16));
-            CreateTestMap();
+            player = new Player("@", Color.White, EntityFont, new Vector2(16, 16), GameRef.screenRectangle);
+            map = new Map(100, 100, EntityFont);
 
             base.LoadContent();
         }
@@ -69,43 +70,13 @@ namespace RagolRogueLike.GameScreens
 
         public override void Draw(GameTime gameTime)
         {
-            //Put this in begin after camera is added to the game
-            //SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null ,null, null, player.Camera.Transformation
-            GameRef.spriteBatch.Begin();
+            GameRef.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, player.Camera.Transformation);
 
-            for (int x = 0; x < 50; x++)
-            {
-                for (int y = 0; y < 50; y++)
-                {
-                    GameRef.spriteBatch.DrawString(EntityFont, testMap[x, y].Symbol, testMap[x, y].Position, testMap[x, y].Color);
-                }
-            }
-
+            map.Draw(GameRef.spriteBatch, player.Camera);
             player.Draw(GameRef.spriteBatch, gameTime);
             base.Draw(gameTime);
 
             GameRef.spriteBatch.End();
-        }
-
-        private void CreateTestMap()
-        {
-            //TODO: Start on collision detection for the player.
-            testMap = new Tile[50, 50];
-
-            for (int x = 0; x < 50; x++)
-            {
-                for (int y = 0; y < 50; y++)
-                {
-                    if (x == 0 || x == 49 || y == 0 || y == 49)
-                    {
-                        testMap[x, y] = new Tile("#", true, Color.White, new Vector2(x * 16, y * 16));
-                    }
-                    else
-                    {
-                        testMap[x, y] = new Tile(".", false, Color.White, new Vector2(x * 16, y * 16));
-                    }
-                }
-            }
         }
 
         #endregion

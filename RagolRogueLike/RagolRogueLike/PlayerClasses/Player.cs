@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using RagolRogueLike.TileEngine;
+
 namespace RagolRogueLike.PlayerClasses
 {
     public class Player
@@ -22,23 +24,35 @@ namespace RagolRogueLike.PlayerClasses
         Vector2 position;
         SpriteFont spriteFont;
 
+        Camera camera;
+
         #endregion
         
         #region Property Region
 
+        public Vector2 Position
+        {
+            get { return position; }
+        }
         
-        
+        public Camera Camera
+        {
+            get { return camera; }
+        }
+
         #endregion
         
         #region Constructor Region
         
-        public Player(string symbol, Color color, SpriteFont spriteFont, Vector2 position)
+        public Player(string symbol, Color color, SpriteFont spriteFont, Vector2 position, Rectangle viewportRect)
         {
             this.symbol = symbol;
             this.color = color;
             block = true;
             this.spriteFont = spriteFont;
             this.position = position;
+
+            camera = new Camera(viewportRect);
         }
 
         #endregion
@@ -49,19 +63,19 @@ namespace RagolRogueLike.PlayerClasses
         {
             Vector2 motion = new Vector2();
             //Here the motion is set to 16 because the size (including spacing) for symbols is 16.
-            if (InputHandler.KeyPressed(Keys.NumPad8))
+            if (InputHandler.KeyPressed(Keys.NumPad8) || InputHandler.KeyPressed(Keys.Up))
             {
                 motion.Y = -16;
             }
-            else if (InputHandler.KeyPressed(Keys.NumPad2))
+            else if (InputHandler.KeyPressed(Keys.NumPad2) || InputHandler.KeyPressed(Keys.Down))
             {
                 motion.Y = 16;
             }
-            else if (InputHandler.KeyPressed(Keys.NumPad4))
+            else if (InputHandler.KeyPressed(Keys.NumPad4) || InputHandler.KeyPressed(Keys.Left))
             {
                 motion.X = -16;
             }
-            else if (InputHandler.KeyPressed(Keys.NumPad6))
+            else if (InputHandler.KeyPressed(Keys.NumPad6) || InputHandler.KeyPressed(Keys.Right))
             {
                 motion.X = 16;
             }
@@ -89,6 +103,7 @@ namespace RagolRogueLike.PlayerClasses
             if (motion != Vector2.Zero)
             {
                 position += motion;
+                camera.LockToPlayer(this);
             }
         }
 
