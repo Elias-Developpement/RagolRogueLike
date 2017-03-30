@@ -21,6 +21,8 @@ namespace RagolRogueLike.TileEngine
         public int y;
         public int width;
         public int height;
+        public int center_x;
+        public int center_y;
 
         public Rect(int x, int y, int w, int h)
         {
@@ -28,7 +30,10 @@ namespace RagolRogueLike.TileEngine
             this.y = y;
             width = w;
             height = h;
+            center_x = (2 * x + w) / 2;
+            center_y = (2 * y + h) / 2;
         }
+
     }
 
     public class Map
@@ -45,7 +50,7 @@ namespace RagolRogueLike.TileEngine
         List<Rect> rooms;
         const int roomMinSize = 6;
         const int roomMaxSize = 10;
-        const int maxRooms = 100;
+        const int maxRooms = 150;
 
         #endregion
 
@@ -136,7 +141,7 @@ namespace RagolRogueLike.TileEngine
 
         private void CreateTestMap()
         {
-            Random random = new Random();
+            Random random = new Random(DateTime.Now.Millisecond);
             int num_rooms = 0;
             
 
@@ -145,8 +150,9 @@ namespace RagolRogueLike.TileEngine
                 int w = random.Next(roomMinSize, roomMaxSize);
                 int h = random.Next(roomMinSize, roomMaxSize);
                 //Random position for the room without going out of the map
-                int x = random.Next(0, mapWidth - w - 1);
-                int y = random.Next(0, mapHeight - h - 1);
+                int x = random.Next(1, mapWidth - w - 1);
+                int y = random.Next(1, mapHeight - h - 1);
+                //TODO: Figure out why the map draws rooms that off the map.
 
                 CreateRoom(x, y, w, h);
 
@@ -177,6 +183,10 @@ namespace RagolRogueLike.TileEngine
                 foreach (Rect otherRoom in rooms)
                 {
                     intersection = IntersectionOfRooms(room, otherRoom);
+                    if (intersection)
+                    {
+                        break;
+                    }
                 }
                 //If they do intersect then end the function
                 if (intersection)
@@ -193,35 +203,48 @@ namespace RagolRogueLike.TileEngine
                             testMap[i, j] = new Tile(".", false, Color.White, new Vector2(i * 16, j * 16));
                         }
                     }
+                    //Get the room count before adding the new room.
+                    int roomCount = rooms.Count;
                     rooms.Add(room);
                     //TODO: Connecting rooms.
+                    //Flip a coin to decide which direction to go first
+                    Random coin = new Random(DateTime.Now.Millisecond);
+                    if (coin.Next(0, 2) == 1)
+                    {
+                        //First horizontal then vertical
+                        CreateHTunnel(rooms[roomCount - 1].center_x, rooms[roomCount - 1].center_y, room.center_x);
+                        CreateVTunnel(room.center_x, rooms[roomCount - 1].center_y, room.center_y);
+                    }
+                    else
+                    {
+                        //First vertical then horizontal
+                        CreateVTunnel(rooms[roomCount - 1].center_x, rooms[roomCount - 1].center_y, room.center_y);
+                        CreateHTunnel(rooms[roomCount - 1].center_x, room.center_y, room.center_x);
+                    }
                 }
             }
         }
 
-        private void CreateHTunnel(int x, int y, int w)
+        private void CreateHTunnel(int x1, int y, int x2)
         {
-            Rect HTunnel = new Rect(x, y, w, 1);
+            int min = Math.Min(x1, x2);
+            int max = Math.Max(x1, x2);
 
-            for (int i = HTunnel.x; i < (HTunnel.x + HTunnel.width); i++)
+            for (int i = min; i < max; i++)
             {
                 testMap[i, y] = new Tile(".", false, Color.White, new Vector2(i * 16, y * 16));
             }
         }
 
-        private void CreateVTunnel(int x, int y, int h)
+        private void CreateVTunnel(int x, int y1, int y2)
         {
-            Rect VTunnel = new Rect(x, y, 1, h);
+            int min = Math.Min(y1, y2);
+            int max = Math.Max(y1, y2);
 
-            for (int i = VTunnel.y; i < (VTunnel.y + VTunnel.height); i++)
+            for (int i = min; i < max; i++)
             {
                 testMap[x, i] = new Tile(".", false, Color.White, new Vector2(x * 16, i * 16));
             }
-        }
-
-        private void FindCenter(Rect room1)
-        {
-            //Used to find where the tunnel will start.
         }
 
         private bool IntersectionOfRooms(Rect room1, Rect room2)

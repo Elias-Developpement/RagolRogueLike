@@ -82,6 +82,11 @@ namespace RagolRogueLike.PlayerClasses
                 if (camera.CameraMode == CameraMode.Follow)
                     camera.LockToPlayer(this);
             }
+            
+            if (InputHandler.KeyReleased(Keys.Space))
+            {
+                camera.ToggleCameraMode();
+            }
 
             Vector2 motion = new Vector2();
             //Here the motion is set to 16 because the size (including spacing) for symbols is 16.
