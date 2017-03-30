@@ -13,6 +13,8 @@ using RagolRogueLike.Entities;
 
 namespace RagolRogueLike.PlayerClasses
 {
+    
+
     public class Player
     {
 

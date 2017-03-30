@@ -12,6 +12,15 @@ using RagolRogueLike.TileEngine;
 
 namespace RagolRogueLike.Entities
 {
+    public struct CombatStats
+    {
+        public int MaxHealth;
+        public int currentHealth;
+
+        public int damage;
+        public int defense;
+    }
+
     public class Entity
     {
 
