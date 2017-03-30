@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using RagolRogueLike.Entities;
+using RagolRogueLike.PlayerClasses;
 
 
 
@@ -44,6 +45,7 @@ namespace RagolRogueLike.TileEngine
         static int mapHeight;
 
         Tile[,] testMap;
+        Player player;
 
         SpriteFont tileFont;
 
@@ -70,13 +72,14 @@ namespace RagolRogueLike.TileEngine
 
         #region Constructor Region
 
-        public Map(int mWidth, int mHeight, SpriteFont tileFont)
+        public Map(int mWidth, int mHeight, SpriteFont tileFont, Player player)
         {
             mapWidth = mWidth;
             mapHeight = mHeight;
 
             testMap = new Tile[mapWidth, mapHeight];
             rooms = new List<Rect>();
+            this.player = player;
 
             this.tileFont = tileFont;
             fillMap();
@@ -152,8 +155,7 @@ namespace RagolRogueLike.TileEngine
                 //Random position for the room without going out of the map
                 int x = random.Next(1, mapWidth - w - 1);
                 int y = random.Next(1, mapHeight - h - 1);
-                //TODO: Figure out why the map draws rooms that off the map.
-
+                
                 CreateRoom(x, y, w, h);
 
                 num_rooms++;
@@ -175,6 +177,7 @@ namespace RagolRogueLike.TileEngine
                     }
                 }
                 rooms.Add(room);
+                player.Position = new Vector2(room.x * 16, room.y * 16);
             }
             else
             {
@@ -206,7 +209,7 @@ namespace RagolRogueLike.TileEngine
                     //Get the room count before adding the new room.
                     int roomCount = rooms.Count;
                     rooms.Add(room);
-                    //TODO: Connecting rooms.
+                    
                     //Flip a coin to decide which direction to go first
                     Random coin = new Random(DateTime.Now.Millisecond);
                     if (coin.Next(0, 2) == 1)

@@ -64,7 +64,7 @@ namespace RagolRogueLike.GameScreens
             EntityFont = Content.Load<SpriteFont>(@"Fonts\EntityFont");
             player = new Player("@", Color.White, EntityFont, new Vector2(16, 16), GameRef.screenRectangle);
             testEntity = new Entity("T", Color.Green, EntityFont, new Vector2(32, 32));
-            map = new Map(100, 100, EntityFont);
+            map = new Map(100, 100, EntityFont, player);
 
             mapViewport = GameRef.GraphicsDevice.Viewport;
             mapViewport.Width = 3 * mapViewport.Width / 4;
