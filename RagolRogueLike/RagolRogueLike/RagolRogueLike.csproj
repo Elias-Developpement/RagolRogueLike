@@ -57,6 +57,7 @@
     <Compile Include="GameStates\BaseGameState.cs" />
     <Compile Include="GameStates\GameState.cs" />
     <Compile Include="GameStates\GameStateManager.cs" />
+    <Compile Include="GameUI\GuiManager.cs" />
     <Compile Include="InputHandler.cs" />
     <Compile Include="PathFinding\BresenhamLine.cs" />
     <Compile Include="PathFinding\DiamondFOV.cs" />

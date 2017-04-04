@@ -16,7 +16,6 @@ namespace RagolRogueLike.PlayerClasses
 {
     public class Player
     {
-
         #region Field Region
 
         string symbol;
@@ -31,6 +30,8 @@ namespace RagolRogueLike.PlayerClasses
         int lightradius = 1;
 
         int damage;
+        int maxHealth;
+        int currentHealth;
 
         #endregion
         
@@ -45,6 +46,21 @@ namespace RagolRogueLike.PlayerClasses
         public Camera Camera
         {
             get { return camera; }
+        }
+
+        public int Damage
+        {
+            get { return damage; }
+        }
+
+        public int MaxHealth
+        {
+            get { return maxHealth; }
+        }
+
+        public int CurrentHealth
+        {
+            get { return currentHealth; }
         }
 
         #endregion
@@ -62,11 +78,13 @@ namespace RagolRogueLike.PlayerClasses
             camera = new Camera(viewportRect);
 
             damage = 10;
+            maxHealth = 20;
+            currentHealth = maxHealth;
         }
 
         #endregion
 
-        #region Method Region
+        #region Monogame Method Region
 
         public void Update(GameTime gameTime, Map map, Entity entity)
         {
@@ -156,14 +174,35 @@ namespace RagolRogueLike.PlayerClasses
             spriteBatch.DrawString(spriteFont, symbol, position, color);
         }
 
+        #endregion
+
+        #region Combat Method Region
+
         private void DealDamage(Entity target)
         {
             target.TakeDamage(damage);
         }
         
+        public void TakeDamage(int damage)
+        {
+            currentHealth -= damage;
+            CheckHealth();
+        }
 
+        private void CheckHealth()
+        {
+            if (currentHealth <= 0)
+            {
+                color = Color.Red;
+                block = false;
+            }
+            else if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+        }
 
         #endregion
-        
+
     }
 }

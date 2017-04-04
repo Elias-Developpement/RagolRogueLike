@@ -71,6 +71,15 @@ namespace RagolRogueLike.GameScreens
             mapViewport.Width = 3 * mapViewport.Width / 4;
             mapViewport.Height = 7 * mapViewport.Height / 8;
 
+            statsViewport = GameRef.GraphicsDevice.Viewport;
+            statsViewport.Width = statsViewport.Width / 4;
+            statsViewport.X = mapViewport.Width;
+
+            messageViewport = GameRef.GraphicsDevice.Viewport;
+            messageViewport.Height = messageViewport.Height / 8;
+            messageViewport.Width = 3 * messageViewport.Width / 4;
+            messageViewport.Y = mapViewport.Height;
+
             base.LoadContent();
         }
 
@@ -82,12 +91,31 @@ namespace RagolRogueLike.GameScreens
 
         public override void Draw(GameTime gameTime)
         {
+            //Draw all of the play area stuff in this area.
             GameRef.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, player.Camera.Transformation);
 
             GraphicsDevice.Viewport = mapViewport;
             map.Draw(GameRef.spriteBatch, player.Camera);
             testEntity.Draw(GameRef.spriteBatch);
             player.Draw(GameRef.spriteBatch, gameTime);
+            base.Draw(gameTime);
+
+            GameRef.spriteBatch.End();
+
+            //Draw all of the messages in this area.
+            GameRef.spriteBatch.Begin();
+
+            GraphicsDevice.Viewport = messageViewport;
+            GameRef.spriteBatch.DrawString(EntityFont, "test", new Vector2(0, 0), Color.White);
+            base.Draw(gameTime);
+            
+            GameRef.spriteBatch.End();
+
+            //Draw all of the stats and other stuff that goes in the side bar in this area.
+            GameRef.spriteBatch.Begin();
+
+            GraphicsDevice.Viewport = statsViewport;
+            GameRef.spriteBatch.DrawString(EntityFont, "test", new Vector2(0, 0), Color.White);
             base.Draw(gameTime);
 
             GameRef.spriteBatch.End();
