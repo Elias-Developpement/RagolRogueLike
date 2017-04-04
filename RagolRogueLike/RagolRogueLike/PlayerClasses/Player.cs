@@ -29,7 +29,6 @@ namespace RagolRogueLike.PlayerClasses
         Camera camera;
 
         int lightradius = 1;
-        DiamondFOV FoV;
 
         int damage;
 
@@ -61,7 +60,6 @@ namespace RagolRogueLike.PlayerClasses
             this.position = position;
 
             camera = new Camera(viewportRect);
-            FoV = new DiamondFOV(lightradius);
 
             damage = 10;
         }
@@ -148,7 +146,7 @@ namespace RagolRogueLike.PlayerClasses
                 {
                     position += motion;
                 }
-                
+
                 camera.LockToPlayer(this);
             }
         }
@@ -163,6 +161,8 @@ namespace RagolRogueLike.PlayerClasses
             target.TakeDamage(damage);
         }
         
+
+
         #endregion
         
     }

@@ -4,16 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using RagolRogueLike.Entities;
-using RagolRogueLike.PlayerClasses;
-using RagolRogueLike.TileEngine;
-
 using Microsoft.Xna.Framework;
+
+using RagolRogueLike.TileEngine;
 
 namespace RagolRogueLike.PathFinding
 {
-    sealed class DiamondFOV
+    abstract class Visibility
     {
-
+        public abstract void Compute(Vector2 position, Map map);
     }
 }

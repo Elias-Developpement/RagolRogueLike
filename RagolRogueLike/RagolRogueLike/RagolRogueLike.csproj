@@ -58,9 +58,11 @@
     <Compile Include="GameStates\GameState.cs" />
     <Compile Include="GameStates\GameStateManager.cs" />
     <Compile Include="InputHandler.cs" />
+    <Compile Include="PathFinding\BresenhamLine.cs" />
     <Compile Include="PathFinding\DiamondFOV.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\SearchNode.cs" />
+    <Compile Include="PathFinding\Visibility.cs" />
     <Compile Include="PlayerClasses\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

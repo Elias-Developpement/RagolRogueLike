@@ -135,14 +135,17 @@ namespace RagolRogueLike.TileEngine
                     destination.X = x * Engine.TileWidth;
 
                     //Only draw tiles that are visible.
-                    if (testMap[x, y].IsVisible)
+                    if (testMap[x, y] != null)
                     {
-                        spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, testMap[x, y].Color);
-                    }
-                    //Or draw tiles that have been discovered but are no longer visible, but draw them gray instead.
-                    else if (testMap[x, y].IsDiscovered)
-                    {
-                        spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, Color.Gray);
+                        if (testMap[x, y].IsVisible)
+                        {
+                            spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, testMap[x, y].Color);
+                        }
+                        //Or draw tiles that have been discovered but are no longer visible, but draw them gray instead.
+                        else if (testMap[x, y].IsDiscovered)
+                        {
+                            spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, Color.Gray);
+                        }
                     }
                 }
             }
@@ -178,6 +181,9 @@ namespace RagolRogueLike.TileEngine
 
                 num_rooms++;
             }
+
+            //TODO: Add in making walls that don't touch anything but other walls not discovered.
+
         }
 
         private void CreateRoom(int x, int y, int w, int h)
@@ -289,6 +295,11 @@ namespace RagolRogueLike.TileEngine
             {
                 return false;
             }
+        }
+
+        public void ChangeVisible(int x, int y)
+        {
+            testMap[x, y].IsVisible = !testMap[x, y].IsVisible;
         }
 
         #endregion
