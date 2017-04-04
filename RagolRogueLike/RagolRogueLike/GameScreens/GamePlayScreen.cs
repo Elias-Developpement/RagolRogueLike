@@ -30,7 +30,8 @@ namespace RagolRogueLike.GameScreens
         Game1 gameRef;
 
         Viewport mapViewport;
-        Viewport guiViewport;
+        Viewport statsViewport;
+        Viewport messageViewport;
 
         #endregion
 

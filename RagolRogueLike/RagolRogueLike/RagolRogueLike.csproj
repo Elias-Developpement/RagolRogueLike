@@ -58,6 +58,7 @@
     <Compile Include="GameStates\GameState.cs" />
     <Compile Include="GameStates\GameStateManager.cs" />
     <Compile Include="InputHandler.cs" />
+    <Compile Include="PathFinding\DiamondFOV.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\SearchNode.cs" />
     <Compile Include="PlayerClasses\Player.cs" />

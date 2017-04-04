@@ -10,11 +10,10 @@ using Microsoft.Xna.Framework.Input;
 
 using RagolRogueLike.TileEngine;
 using RagolRogueLike.Entities;
+using RagolRogueLike.PathFinding;
 
 namespace RagolRogueLike.PlayerClasses
 {
-    
-
     public class Player
     {
 
@@ -28,6 +27,9 @@ namespace RagolRogueLike.PlayerClasses
         SpriteFont spriteFont;
 
         Camera camera;
+
+        int lightradius = 1;
+        DiamondFOV FoV;
 
         int damage;
 
@@ -59,6 +61,7 @@ namespace RagolRogueLike.PlayerClasses
             this.position = position;
 
             camera = new Camera(viewportRect);
+            FoV = new DiamondFOV(lightradius);
 
             damage = 10;
         }

@@ -16,6 +16,8 @@ namespace RagolRogueLike.TileEngine
         string symbol;
         Color color;
         bool block;
+        bool visible;
+        bool discovered;
 
         Vector2 position;
         Rectangle positionRec;
@@ -51,6 +53,18 @@ namespace RagolRogueLike.TileEngine
             get { return color; }
         }
 
+        public bool IsVisible
+        {
+            get { return visible; }
+            set { visible = value; }
+        }
+
+        public bool IsDiscovered
+        {
+            get { return discovered; }
+            set { discovered = value; }
+        }
+
         #endregion
 
         #region Constructor Region
@@ -61,6 +75,8 @@ namespace RagolRogueLike.TileEngine
             this.block = block;
             this.color = color;
             this.position = position;
+            visible = true;
+            discovered = false;
         }
 
         #endregion

@@ -89,9 +89,18 @@ namespace RagolRogueLike.TileEngine
 
         //Used to create the next level of the map.
         //Still needs to be implemented by adding stairs and what not.
-        public Map(SpriteFont tileFont)
+        //Also needs to find out how to save and store maps so that you can come back up the stairs
+        //to go back to an old map.
+        public Map(SpriteFont tileFont, Player player)
         {
             this.tileFont = tileFont;
+
+            testMap = new Tile[mapWidth, mapHeight];
+            rooms = new List<Rect>();
+            this.player = player;
+
+            fillMap();
+            CreateTestMap();
         }
 
 
@@ -125,7 +134,16 @@ namespace RagolRogueLike.TileEngine
                 {
                     destination.X = x * Engine.TileWidth;
 
-                    spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, testMap[x, y].Color);
+                    //Only draw tiles that are visible.
+                    if (testMap[x, y].IsVisible)
+                    {
+                        spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, testMap[x, y].Color);
+                    }
+                    //Or draw tiles that have been discovered but are no longer visible, but draw them gray instead.
+                    else if (testMap[x, y].IsDiscovered)
+                    {
+                        spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, Color.Gray);
+                    }
                 }
             }
 
@@ -141,7 +159,7 @@ namespace RagolRogueLike.TileEngine
                 }
             }
         }
-
+        //TODO: Tunnels seem to be leaving a wall in the way sometimes.
         private void CreateTestMap()
         {
             Random random = new Random(DateTime.Now.Millisecond);
@@ -233,7 +251,7 @@ namespace RagolRogueLike.TileEngine
             int min = Math.Min(x1, x2);
             int max = Math.Max(x1, x2);
 
-            for (int i = min; i < max; i++)
+            for (int i = min; i < max + 1; i++)
             {
                 testMap[i, y] = new Tile(".", false, Color.White, new Vector2(i * 16, y * 16));
             }
@@ -244,7 +262,7 @@ namespace RagolRogueLike.TileEngine
             int min = Math.Min(y1, y2);
             int max = Math.Max(y1, y2);
 
-            for (int i = min; i < max; i++)
+            for (int i = min; i < max + 1; i++)
             {
                 testMap[x, i] = new Tile(".", false, Color.White, new Vector2(x * 16, i * 16));
             }
