@@ -63,6 +63,11 @@ namespace RagolRogueLike.PlayerClasses
             get { return currentHealth; }
         }
 
+        public float HealthPercent
+        {
+            get { return (float)currentHealth / maxHealth; }
+        }
+
         #endregion
         
         #region Constructor Region

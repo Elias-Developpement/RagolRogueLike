@@ -13,12 +13,15 @@ using RagolRogueLike.Controls;
 using RagolRogueLike.TileEngine;
 using RagolRogueLike.PlayerClasses;
 using RagolRogueLike.Entities;
+using RagolRogueLike.GameUI;
 
 namespace RagolRogueLike.GameScreens
 {
     public class GamePlayScreen : BaseGameState
     {
         #region Field Region
+
+        GuiManager gui;
 
         Engine engine;
         Map map;
@@ -80,6 +83,8 @@ namespace RagolRogueLike.GameScreens
             messageViewport.Width = 3 * messageViewport.Width / 4;
             messageViewport.Y = mapViewport.Height;
 
+            gui = new GuiManager(player, statsViewport, messageViewport, GameRef);
+
             base.LoadContent();
         }
 
@@ -105,8 +110,7 @@ namespace RagolRogueLike.GameScreens
             //Draw all of the messages in this area.
             GameRef.spriteBatch.Begin();
 
-            GraphicsDevice.Viewport = messageViewport;
-            GameRef.spriteBatch.DrawString(EntityFont, "test", new Vector2(0, 0), Color.White);
+            gui.DrawSideView(GameRef.spriteBatch);
             base.Draw(gameTime);
             
             GameRef.spriteBatch.End();
@@ -114,8 +118,7 @@ namespace RagolRogueLike.GameScreens
             //Draw all of the stats and other stuff that goes in the side bar in this area.
             GameRef.spriteBatch.Begin();
 
-            GraphicsDevice.Viewport = statsViewport;
-            GameRef.spriteBatch.DrawString(EntityFont, "test", new Vector2(0, 0), Color.White);
+            gui.DrawMessageView(GameRef.spriteBatch);
             base.Draw(gameTime);
 
             GameRef.spriteBatch.End();
