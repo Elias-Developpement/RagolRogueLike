@@ -90,7 +90,7 @@ namespace RagolRogueLike.GameUI
 
         #endregion
 
-        #region Message Region
+        #region Message GUI Region
 
         private void DrawMessageBorder(SpriteBatch spriteBatch)
         {
@@ -100,11 +100,18 @@ namespace RagolRogueLike.GameUI
 
         #endregion
 
-        #region Side Region
+        #region Side GUI Region
 
         private void DrawHealth(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(guiFont, "Health: " + player.CurrentHealth.ToString() + " / " + player.MaxHealth.ToString(), new Vector2(10, 10), Color.Red);
+            //Create a box that becomes smaller as health decreases.
+            //Could pose a problem later since it currently only decrease with int values and not float
+            //therefore it only decrease every couple of hit points but that shouldn't really be a problem for the most part.
+            spriteBatch.Draw(RectTexture, new Rectangle(20, 20, 216, 20), Color.White);
+            spriteBatch.Draw(RectTexture, new Rectangle(22, 22, 212, 16), Color.Black);
+            spriteBatch.Draw(RectTexture, new Rectangle(22, 22, 212 * player.HealthPercent / 100, 16), Color.Red);
+
+            spriteBatch.DrawString(guiFont, "Health: " + player.CurrentHealth.ToString() + " / " + player.MaxHealth.ToString(), new Vector2(70, 23), Color.White);
         }
 
         private void DrawBorder(SpriteBatch spriteBatch)
