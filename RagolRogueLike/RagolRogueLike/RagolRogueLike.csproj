@@ -59,6 +59,7 @@
     <Compile Include="GameStates\GameStateManager.cs" />
     <Compile Include="GameUI\GuiManager.cs" />
     <Compile Include="InputHandler.cs" />
+    <Compile Include="MapGenerator\BasicDungeon.cs" />
     <Compile Include="PathFinding\BresenhamLine.cs" />
     <Compile Include="PathFinding\DiamondFOV.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />

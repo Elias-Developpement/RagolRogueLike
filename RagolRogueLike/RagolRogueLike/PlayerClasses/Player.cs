@@ -83,7 +83,7 @@ namespace RagolRogueLike.PlayerClasses
             camera = new Camera(viewportRect);
 
             damage = 10;
-            maxHealth = 999;
+            maxHealth = 20;
             currentHealth = maxHealth;
         }
 
@@ -96,14 +96,14 @@ namespace RagolRogueLike.PlayerClasses
             camera.Update(gameTime);
 
             //Debugging code
-            /*if (InputHandler.KeyPressed(Keys.K))
+            if (InputHandler.KeyPressed(Keys.K))
             {
                 currentHealth--;
             }
             else if (InputHandler.KeyPressed(Keys.L))
             {
                 currentHealth++;
-            }*/
+            }
             //End of Debugging code
 
             if (InputHandler.KeyReleased(Keys.PageUp))

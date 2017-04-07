@@ -107,9 +107,8 @@ namespace RagolRogueLike.GameUI
             //Create a box that becomes smaller as health decreases.
             //Could pose a problem later since it currently only decrease with int values and not float
             //therefore it only decrease every couple of hit points but that shouldn't really be a problem for the most part.
-            spriteBatch.Draw(RectTexture, new Rectangle(20, 20, 216, 20), Color.White);
-            spriteBatch.Draw(RectTexture, new Rectangle(22, 22, 212, 16), Color.Black);
-            spriteBatch.Draw(RectTexture, new Rectangle(22, 22, 212 * player.HealthPercent / 100, 16), Color.Red);
+            //Since could always make HP work with values that make the percents work out nicely such as using multiples of 10s.
+            DrawDynamicBar(spriteBatch, 20, 20, 216, 20, player.HealthPercent, Color.Red);
 
             spriteBatch.DrawString(guiFont, "Health: " + player.CurrentHealth.ToString() + " / " + player.MaxHealth.ToString(), new Vector2(70, 23), Color.White);
         }
@@ -120,6 +119,20 @@ namespace RagolRogueLike.GameUI
             spriteBatch.Draw(RectTexture, new Rectangle(3, 3, 250, 762), Color.Black);
             spriteBatch.Draw(RectTexture, new Rectangle(6, 6, 244, 756), Color.White);
             spriteBatch.Draw(RectTexture, new Rectangle(9, 9, 238, 750), Color.Black);
+        }
+
+        #endregion
+
+        #region Drawing Methods Region
+
+        //Used to draw stuff such as health bars, experience bars, etc..
+        //Takes in the starting x, y position and the width and height of the bars
+        // as well as the tracked stat and color of the bar.
+        private void DrawDynamicBar(SpriteBatch spriteBatch, int x, int y, int w, int h, int trackedStat, Color color)
+        {
+            spriteBatch.Draw(RectTexture, new Rectangle(x, y, w, h), Color.White);
+            spriteBatch.Draw(RectTexture, new Rectangle(x + 2, y + 2, w - 4, h - 4), Color.Black);
+            spriteBatch.Draw(RectTexture, new Rectangle(x + 2, y + 2, (w - 4) * trackedStat / 100, h - 4), color);
         }
 
         #endregion
