@@ -54,6 +54,7 @@ namespace RagolRogueLike.MapGenerator
 
         #region Constructor Region
 
+        //TODO: Take the last room and add a stairwell to it down to the next floor.
         public BasicDungeon(Tile[,] dungeon, Player player)
         {
             this.dungeon = dungeon;

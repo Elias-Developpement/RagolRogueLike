@@ -91,7 +91,7 @@ namespace RagolRogueLike.PlayerClasses
 
         #region Monogame Method Region
 
-        public void Update(GameTime gameTime, Map map, Entity entity)
+        public void Update(GameTime gameTime, Map map)
         {
             camera.Update(gameTime);
 
@@ -172,10 +172,10 @@ namespace RagolRogueLike.PlayerClasses
                 {
                     return;
                 }
-                else if (entity.Position == position + motion && entity.Block)
+                /*else if (entity.Position == position + motion && entity.Block)
                 {
                     DealDamage(entity);
-                }
+                }*/
                 else
                 {
                     position += motion;

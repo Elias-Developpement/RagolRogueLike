@@ -14,6 +14,7 @@ using RagolRogueLike.TileEngine;
 using RagolRogueLike.PlayerClasses;
 using RagolRogueLike.Entities;
 using RagolRogueLike.GameUI;
+using RagolRogueLike.World;
 
 namespace RagolRogueLike.GameScreens
 {
@@ -24,7 +25,7 @@ namespace RagolRogueLike.GameScreens
         GuiManager gui;
 
         Engine engine;
-        Map map;
+        Dungeon dungeon;
         Player player;
         Entity testEntity;
 
@@ -67,8 +68,8 @@ namespace RagolRogueLike.GameScreens
             ContentManager Content = Game.Content;
             EntityFont = Content.Load<SpriteFont>(@"Fonts\EntityFont");
             player = new Player("@", Color.White, EntityFont, new Vector2(16, 16), GameRef.screenRectangle);
-            testEntity = new Entity("T", Color.Green, EntityFont, new Vector2(32, 32));
-            map = new Map(100, 100, EntityFont, player);
+            //testEntity = new Entity("T", Color.Green, EntityFont, new Vector2(32, 32));
+            dungeon = new Dungeon(EntityFont, player);
 
             mapViewport = GameRef.GraphicsDevice.Viewport;
             mapViewport.Width = 3 * mapViewport.Width / 4;
@@ -90,7 +91,7 @@ namespace RagolRogueLike.GameScreens
 
         public override void Update(GameTime gameTime)
         {
-            player.Update(gameTime, map, testEntity);
+            dungeon.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -100,8 +101,8 @@ namespace RagolRogueLike.GameScreens
             GameRef.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, player.Camera.Transformation);
 
             GraphicsDevice.Viewport = mapViewport;
-            map.Draw(GameRef.spriteBatch, player.Camera);
-            testEntity.Draw(GameRef.spriteBatch);
+            dungeon.Draw(GameRef.spriteBatch);
+            //testEntity.Draw(GameRef.spriteBatch);
             player.Draw(GameRef.spriteBatch, gameTime);
             base.Draw(gameTime);
 

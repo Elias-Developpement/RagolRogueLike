@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using RagolRogueLike.Entities;
-using RagolRogueLike.PlayerClasses;
-using RagolRogueLike.MapGenerator;
-
-
 
 namespace RagolRogueLike.TileEngine
 {
@@ -22,12 +17,9 @@ namespace RagolRogueLike.TileEngine
         static int mapWidth;
         static int mapHeight;
 
-        Tile[,] testMap;
-        Player player;
+        Tile[,] tiles;
 
         SpriteFont tileFont;
-
-        BasicDungeon testdungeon;
 
         #endregion
 
@@ -43,23 +35,26 @@ namespace RagolRogueLike.TileEngine
             get { return Engine.TileHeight * mapHeight; }
         }
 
+        public Tile[,] Tiles
+        {
+            get { return tiles; }
+            set { tiles = value; }
+        }
+
         #endregion
 
         #region Constructor Region
 
-        public Map(int mWidth, int mHeight, SpriteFont tileFont, Player player)
+        public Map(int mWidth, int mHeight, SpriteFont tileFont)
         {
             mapWidth = mWidth;
             mapHeight = mHeight;
 
-            testMap = new Tile[mapWidth, mapHeight];
-            this.player = player;
+            tiles = new Tile[mapWidth, mapHeight];
 
             this.tileFont = tileFont;
 
-            testdungeon = new BasicDungeon(testMap, player);
             fillMap();
-            testMap = testdungeon.CreateBasicDungeon();
             //fillBlocked();
         }
 
@@ -67,12 +62,11 @@ namespace RagolRogueLike.TileEngine
         //Still needs to be implemented by adding stairs and what not.
         //Also needs to find out how to save and store maps so that you can come back up the stairs
         //to go back to an old map.
-        public Map(SpriteFont tileFont, Player player)
+        public Map(SpriteFont tileFont)
         {
             this.tileFont = tileFont;
 
-            testMap = new Tile[mapWidth, mapHeight];
-            this.player = player;
+            tiles = new Tile[mapWidth, mapHeight];
 
             fillMap();
         }
@@ -109,16 +103,16 @@ namespace RagolRogueLike.TileEngine
                     destination.X = x * Engine.TileWidth;
 
                     //Only draw tiles that are visible.
-                    if (testMap[x, y] != null)
+                    if (tiles[x, y] != null)
                     {
-                        if (testMap[x, y].IsVisible)
+                        if (tiles[x, y].IsVisible)
                         {
-                            spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, testMap[x, y].Color);
+                            spriteBatch.DrawString(tileFont, tiles[x, y].Symbol, tiles[x, y].Position, tiles[x, y].Color);
                         }
                         //Or draw tiles that have been discovered but are no longer visible, but draw them gray instead.
-                        else if (testMap[x, y].IsDiscovered)
+                        else if (tiles[x, y].IsDiscovered)
                         {
-                            spriteBatch.DrawString(tileFont, testMap[x, y].Symbol, testMap[x, y].Position, Color.Gray);
+                            spriteBatch.DrawString(tileFont, tiles[x, y].Symbol, tiles[x, y].Position, Color.Gray);
                         }
                     }
                 }
@@ -132,14 +126,14 @@ namespace RagolRogueLike.TileEngine
             {
                 for (int y = 0; y < mapHeight; y++)
                 {
-                    testMap[x, y] = new Tile("#", true, Color.White, new Vector2(x * 16, y * 16));
+                    tiles[x, y] = new Tile("#", true, Color.White, new Vector2(x * 16, y * 16));
                 }
             }
         }
         
         public bool GetBlocked(int x, int y)
         {
-            if (testMap[x, y].Block)
+            if (tiles[x, y].Block)
             {
                 return true;
             }
@@ -151,7 +145,7 @@ namespace RagolRogueLike.TileEngine
 
         public void ChangeVisible(int x, int y)
         {
-            testMap[x, y].IsVisible = !testMap[x, y].IsVisible;
+            tiles[x, y].IsVisible = !tiles[x, y].IsVisible;
         }
 
         #endregion
