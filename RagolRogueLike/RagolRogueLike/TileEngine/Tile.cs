@@ -15,6 +15,7 @@ namespace RagolRogueLike.TileEngine
 
         string symbol;
         Color color;
+        Color background;
         bool block;
         bool visible;
         bool discovered;
@@ -53,6 +54,11 @@ namespace RagolRogueLike.TileEngine
             get { return color; }
         }
 
+        public Color Background
+        {
+            get { return background; }
+        }
+
         public bool IsVisible
         {
             get { return visible; }
@@ -69,11 +75,12 @@ namespace RagolRogueLike.TileEngine
 
         #region Constructor Region
 
-        public Tile(string symbol, bool block, Color color, Vector2 position)
+        public Tile(string symbol, bool block, Color color, Color background, Vector2 position)
         {
             this.symbol = symbol;
             this.block = block;
             this.color = color;
+            this.background = background;
             this.position = position;
             visible = true;
             discovered = false;

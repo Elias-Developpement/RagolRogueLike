@@ -76,6 +76,7 @@ namespace RagolRogueLike.TileEngine
 
         #region Method Region
 
+        //TODO: Add background color to tiles.
         public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             Point cameraPoint = Engine.VectorToCell(camera.Position * (1 / camera.Zoom));
@@ -126,7 +127,7 @@ namespace RagolRogueLike.TileEngine
             {
                 for (int y = 0; y < mapHeight; y++)
                 {
-                    tiles[x, y] = new Tile("#", true, Color.White, new Vector2(x * 16, y * 16));
+                    tiles[x, y] = new Tile("#", true, Color.White, Color.DarkGray, new Vector2(x * 16, y * 16));
                 }
             }
         }
@@ -147,6 +148,7 @@ namespace RagolRogueLike.TileEngine
         {
             tiles[x, y].IsVisible = !tiles[x, y].IsVisible;
         }
+
 
         #endregion
 

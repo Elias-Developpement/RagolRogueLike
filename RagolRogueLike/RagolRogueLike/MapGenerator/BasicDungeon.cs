@@ -69,6 +69,7 @@ namespace RagolRogueLike.MapGenerator
 
         public Tile[,] CreateBasicDungeon()
         {
+
             Random random = new Random(DateTime.Now.Millisecond);
             int num_rooms = 0;
 
@@ -100,14 +101,14 @@ namespace RagolRogueLike.MapGenerator
                 {
                     for (int j = room.y; j < (room.y + room.height); j++)
                     {
-                        dungeon[i, j] = new Tile(".", false, Color.White, new Vector2(i * 16, j * 16));
+                        dungeon[i, j] = new Tile(".", false, Color.White, Color.LightGray, new Vector2(i * 16, j * 16));
                     }
                 }
                 rooms.Add(room);
 
                 Random rnd = new Random(DateTime.Now.Millisecond);
-                int playerX = rnd.Next(x, x + w + 1);
-                int playerY = rnd.Next(y, y + h + 1);
+                int playerX = rnd.Next(x, x + w);
+                int playerY = rnd.Next(y, y + h);
 
                 player.Position = new Vector2(playerX * 16, playerY * 16);
                 player.Camera.LockToPlayer(player);
@@ -136,7 +137,7 @@ namespace RagolRogueLike.MapGenerator
                     {
                         for (int j = room.y; j < (room.y + room.height); j++)
                         {
-                            dungeon[i, j] = new Tile(".", false, Color.White, new Vector2(i * 16, j * 16));
+                            dungeon[i, j] = new Tile(".", false, Color.White, Color.LightGray, new Vector2(i * 16, j * 16));
                         }
                     }
                     //Get the room count before adding the new room.
@@ -168,7 +169,7 @@ namespace RagolRogueLike.MapGenerator
 
             for (int i = min; i < max + 1; i++)
             {
-                dungeon[i, y] = new Tile(".", false, Color.White, new Vector2(i * 16, y * 16));
+                dungeon[i, y] = new Tile(".", false, Color.White, Color.LightGray, new Vector2(i * 16, y * 16));
             }
         }
 
@@ -179,7 +180,7 @@ namespace RagolRogueLike.MapGenerator
 
             for (int i = min; i < max + 1; i++)
             {
-                dungeon[x, i] = new Tile(".", false, Color.White, new Vector2(x * 16, i * 16));
+                dungeon[x, i] = new Tile(".", false, Color.White, Color.LightGray, new Vector2(x * 16, i * 16));
             }
         }
 
