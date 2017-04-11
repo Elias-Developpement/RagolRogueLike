@@ -38,6 +38,11 @@ namespace RagolRogueLike.MapGenerator
     {
         #region Field Region
 
+        int stairsDownX;
+        int stairsDownY;
+        int stairsUpX;
+        int stairsUpY;
+
         Tile[,] dungeon;
         Player player;
 
@@ -87,11 +92,14 @@ namespace RagolRogueLike.MapGenerator
                 num_rooms++;
             }
 
+            //Place the stairs up into the first room.
+            dungeon[stairsUpX, stairsUpY] = new Tile("<", false, Color.White, Color.LightGray, new Vector2(stairsUpX * 16, stairsUpY * 16));
+
             //Place the stairs down into the last room. 
             int lastRoom = rooms.Count - 1;
-            int stairX = random.Next(rooms[lastRoom].x, rooms[lastRoom].x + rooms[lastRoom].width);
-            int stairY = random.Next(rooms[lastRoom].y, rooms[lastRoom].y + rooms[lastRoom].height);
-            dungeon[stairX, stairY] = new Tile(">", false, Color.White, Color.LightGray, new Vector2(stairX * 16, stairY * 16));
+            stairsDownX = random.Next(rooms[lastRoom].x, rooms[lastRoom].x + rooms[lastRoom].width);
+            stairsDownY = random.Next(rooms[lastRoom].y, rooms[lastRoom].y + rooms[lastRoom].height);
+            dungeon[stairsDownX, stairsDownY] = new Tile(">", false, Color.White, Color.LightGray, new Vector2(stairsDownX * 16, stairsDownY * 16));
 
             return dungeon;
         }
@@ -119,7 +127,8 @@ namespace RagolRogueLike.MapGenerator
                 player.Position = new Vector2(playerX * 16, playerY * 16);
                 player.Camera.LockToPlayer(player);
 
-                dungeon[playerX, playerY] = new Tile("<", false, Color.White, Color.LightGray, new Vector2(playerX * 16, playerY * 16));
+                stairsUpX = playerX;
+                stairsUpY = playerY;
             }
             else
             {

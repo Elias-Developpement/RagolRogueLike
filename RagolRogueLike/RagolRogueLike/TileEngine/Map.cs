@@ -17,6 +17,11 @@ namespace RagolRogueLike.TileEngine
         static int mapWidth;
         static int mapHeight;
 
+        int stairsDownX;
+        int stairsDownY;
+        int stairsUpX;
+        int stairsUpY;
+
         Tile[,] tiles;
 
         SpriteFont tileFont;
@@ -39,6 +44,26 @@ namespace RagolRogueLike.TileEngine
         {
             get { return tiles; }
             set { tiles = value; }
+        }
+
+        public int StairsDownX
+        {
+            get { return stairsDownX; }
+        }
+
+        public int StairsDownY
+        {
+            get { return stairsDownY; }
+        }
+
+        public int StairsUpX
+        {
+            get { return stairsUpX; }
+        }
+
+        public int StairsUpY
+        {
+            get { return stairsUpY; }
         }
 
         #endregion
@@ -149,6 +174,35 @@ namespace RagolRogueLike.TileEngine
             tiles[x, y].IsVisible = !tiles[x, y].IsVisible;
         }
 
+        public void FindStairsDown()
+        {
+            for (int x = 0; x < mapWidth; x++)
+            {
+                for (int y = 0; y < mapHeight; y++)
+                {
+                    if (tiles[x, y].Symbol == ">")
+                    {
+                        stairsDownX = x;
+                        stairsDownY = y;
+                    }
+                }
+            }
+        }
+
+        public void FindStairsUp()
+        {
+            for (int x = 0; x < mapWidth; x++)
+            {
+                for (int y = 0; y < mapHeight; y++)
+                {
+                    if (tiles[x, y].Symbol == "<")
+                    {
+                        stairsUpX = x;
+                        stairsUpY = y;
+                    }
+                }
+            }
+        }
 
         #endregion
 
