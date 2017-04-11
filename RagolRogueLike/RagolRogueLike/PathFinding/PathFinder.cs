@@ -22,7 +22,7 @@ namespace RagolRogueLike.PathFinding
         //Size of the map
         private int mapWidth;
         private int mapHeight;
-        private int numberNodesInTile = 8;
+        private int numberNodesInTile = 16;
 
         private List<SearchNode> openList = new List<SearchNode>();
         private List<SearchNode> closedList = new List<SearchNode>();
@@ -37,11 +37,10 @@ namespace RagolRogueLike.PathFinding
 
         public PathFinder(Map map)
         {
-            //Need to decide on size of nodes instead of using every single pixel
-            //For now divide every tile into a 4x4 grid of 8x8 pixel nodes
-            //TODO: Get the map width and height before trying to use pathfinder
-            //mapWidth = Map.MapWidthInPixels / numberNodesInTile;
-            //mapHeight = Map.MapHeightInPixels / numberNodesInTile;
+            
+            //This should create the map into tiles of the proper size 16*16.
+            mapWidth = Map.MapWidthInPixels / numberNodesInTile;
+            mapHeight = Map.MapHeightInPixels / numberNodesInTile;
 
             InitializeSearchNodes(map);
         }

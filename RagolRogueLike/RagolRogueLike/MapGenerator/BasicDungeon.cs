@@ -13,8 +13,6 @@ namespace RagolRogueLike.MapGenerator
 {
     internal struct Rect
     {
-        //TODO: Possibly look at changing width and height
-        //To an x2, y2 so that the for loops in the generation code looks better.
         public int x;
         public int y;
         public int width;
@@ -59,7 +57,6 @@ namespace RagolRogueLike.MapGenerator
 
         #region Constructor Region
 
-        //TODO: Take the last room and add a stairwell to it down to the next floor.
         public BasicDungeon(Tile[,] dungeon, Player player)
         {
             this.dungeon = dungeon;
@@ -211,7 +208,6 @@ namespace RagolRogueLike.MapGenerator
 
             return false;
         }
-
 
         #endregion
     }

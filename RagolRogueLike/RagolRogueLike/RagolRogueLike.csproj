@@ -50,6 +50,7 @@
     <Compile Include="Controls\PictureBox.cs" />
     <Compile Include="Controls\ScrollSelector.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\EntityManager.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameScreens\GamePlayScreen.cs" />
     <Compile Include="GameScreens\StartMenuScreen.cs" />

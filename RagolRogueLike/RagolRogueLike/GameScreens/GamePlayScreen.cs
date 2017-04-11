@@ -27,7 +27,6 @@ namespace RagolRogueLike.GameScreens
         Engine engine;
         Dungeon dungeon;
         Player player;
-        Entity testEntity;
 
         SpriteFont EntityFont;
 
@@ -68,7 +67,6 @@ namespace RagolRogueLike.GameScreens
             ContentManager Content = Game.Content;
             EntityFont = Content.Load<SpriteFont>(@"Fonts\EntityFont");
             player = new Player("@", Color.White, EntityFont, new Vector2(16, 16), GameRef.screenRectangle);
-            //testEntity = new Entity("T", Color.Green, EntityFont, new Vector2(32, 32));
             dungeon = new Dungeon(EntityFont, player);
 
             mapViewport = GameRef.GraphicsDevice.Viewport;
@@ -102,7 +100,6 @@ namespace RagolRogueLike.GameScreens
 
             GraphicsDevice.Viewport = mapViewport;
             dungeon.Draw(GameRef.spriteBatch);
-            //testEntity.Draw(GameRef.spriteBatch);
             player.Draw(GameRef.spriteBatch, gameTime);
             base.Draw(gameTime);
 

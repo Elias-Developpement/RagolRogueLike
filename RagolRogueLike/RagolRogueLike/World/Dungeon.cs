@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using RagolRogueLike.MapGenerator;
 using RagolRogueLike.TileEngine;
 using RagolRogueLike.PlayerClasses;
+using RagolRogueLike.Entities;
 
 namespace RagolRogueLike.World
 {
@@ -23,7 +24,7 @@ namespace RagolRogueLike.World
 
         int floor = 0;
         List<Map> dungeon;
-        BasicDungeon level;
+        List<EntityManager> entities;
 
         SpriteFont tileFont;
 
@@ -43,6 +44,7 @@ namespace RagolRogueLike.World
             this.tileFont = tileFont;
 
             dungeon = new List<Map>();
+            entities = new List<EntityManager>();
 
             //Add the first level of the dungeon to the game.
             Map firstLevel = new Map(100, 100, tileFont);
@@ -50,9 +52,8 @@ namespace RagolRogueLike.World
 
             //Initialize the dungeon generator
             //Using the basic one that creates a pretty shitty dungeon.
-            level = new BasicDungeon(dungeon[floor].Tiles, player);
+            BasicDungeon level = new BasicDungeon(dungeon[floor].Tiles, player);
             dungeon[floor].Tiles = level.CreateBasicDungeon();
-
             dungeon[floor].FindStairsUp();
             dungeon[floor].FindStairsDown();
         }
@@ -72,7 +73,7 @@ namespace RagolRogueLike.World
             dungeon[floor].Draw(spriteBatch, player.Camera);
         }
         
-        public void ChangeLevel()
+        private void ChangeLevel()
         {
             // > is stairs down
             if (InputHandler.KeyReleased(Keys.OemPeriod) && (InputHandler.KeyDown(Keys.RightShift) || InputHandler.KeyDown(Keys.LeftShift)) && dungeon[floor].Tiles[(int)player.Position.X / 16, (int)player.Position.Y / 16].Symbol == ">")

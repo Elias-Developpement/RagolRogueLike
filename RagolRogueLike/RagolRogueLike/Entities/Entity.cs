@@ -29,6 +29,7 @@ namespace RagolRogueLike.Entities
         string symbol;
         Color color;
         bool block;
+        int managerID;
 
         Vector2 position;
         SpriteFont spriteFont;
@@ -39,6 +40,12 @@ namespace RagolRogueLike.Entities
         #endregion
 
         #region Property Region
+
+        public int ManagerID
+        {
+            get { return managerID; }
+            internal set { managerID = value; }
+        }
 
         public Vector2 Position
         {
