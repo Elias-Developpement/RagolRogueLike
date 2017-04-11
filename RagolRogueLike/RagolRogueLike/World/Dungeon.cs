@@ -73,20 +73,24 @@ namespace RagolRogueLike.World
         public void ChangeLevel()
         {
             //TODO: Add in changing floor logic.
-            //After stairs are added check for the stairs before going down.
             // > is stairs down
-            if (InputHandler.KeyReleased(Keys.OemPeriod) && (InputHandler.KeyDown(Keys.RightShift) || InputHandler.KeyDown(Keys.LeftShift)))
+            if (InputHandler.KeyReleased(Keys.OemPeriod) && (InputHandler.KeyDown(Keys.RightShift) || InputHandler.KeyDown(Keys.LeftShift)) && dungeon[floor].Tiles[(int)player.Position.X / 16, (int)player.Position.Y / 16].Symbol == ">")
             {
-                //TODO: Check if the next level is already created first.
-                Map newLevel = new Map(tileFont);
-                dungeon.Add(newLevel);
+                //TODO: Make it so that when you change levels it places you on stairs after those are added into the game.
+                if (dungeon.Count <= floor + 1)
+                {
+                    Map newLevel = new Map(tileFont);
+                    dungeon.Add(newLevel);
+                    BasicDungeon newGen = new BasicDungeon(dungeon[floor + 1].Tiles, player);
+                    dungeon[floor + 1].Tiles = newGen.CreateBasicDungeon();
+                }
                 floor++;
-                BasicDungeon newGen = new BasicDungeon(dungeon[floor].Tiles, player);
-                dungeon[floor].Tiles = newGen.CreateBasicDungeon();
+                
             }
             // < is stairs up
-            else if (InputHandler.KeyReleased(Keys.OemComma) && (InputHandler.KeyDown(Keys.RightShift) || InputHandler.KeyDown(Keys.LeftShift)))
+            else if (InputHandler.KeyReleased(Keys.OemComma) && (InputHandler.KeyDown(Keys.RightShift) || InputHandler.KeyDown(Keys.LeftShift)) && dungeon[floor].Tiles[(int)player.Position.X / 16, (int)player.Position.Y / 16].Symbol == "<")
             {
+                //TODO: Find a way to make it so that the player is placed on the old stairs down if you move up.
                 if (floor > 0)
                 {
                     floor--;
