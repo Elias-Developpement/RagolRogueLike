@@ -52,10 +52,13 @@ namespace RagolRogueLike.World
 
             //Initialize the dungeon generator
             //Using the basic one that creates a pretty shitty dungeon.
-            BasicDungeon level = new BasicDungeon(dungeon[floor].Tiles, player);
+            BasicDungeon level = new BasicDungeon(dungeon[floor].Tiles, player, tileFont);
             dungeon[floor].Tiles = level.CreateBasicDungeon();
             dungeon[floor].FindStairsUp();
             dungeon[floor].FindStairsDown();
+
+            //Retrieve the entities and add it to the floor.
+            entities.Add(level.GetEntities());
         }
 
         #endregion
@@ -64,13 +67,14 @@ namespace RagolRogueLike.World
 
         public void Update(GameTime gameTime)
         {
-            player.Update(gameTime, dungeon[floor]);
+            player.Update(gameTime, dungeon[floor], entities[floor]);
             ChangeLevel();
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             dungeon[floor].Draw(spriteBatch, player.Camera);
+            entities[floor].Draw(spriteBatch);
         }
         
         private void ChangeLevel()
@@ -82,7 +86,7 @@ namespace RagolRogueLike.World
                 {
                     Map newLevel = new Map(tileFont);
                     dungeon.Add(newLevel);
-                    BasicDungeon newGen = new BasicDungeon(dungeon[floor + 1].Tiles, player);
+                    BasicDungeon newGen = new BasicDungeon(dungeon[floor + 1].Tiles, player, tileFont);
                     dungeon[floor + 1].Tiles = newGen.CreateBasicDungeon();
                     dungeon[floor + 1].FindStairsDown();
                     dungeon[floor + 1].FindStairsUp();

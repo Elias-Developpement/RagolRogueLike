@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+using RagolRogueLike.TileEngine;
+
 namespace RagolRogueLike.Entities
 {
     public class EntityManager
@@ -48,9 +53,40 @@ namespace RagolRogueLike.Entities
 
         #region Method Region
 
-        //TODO: Add in adding entities to this list and deleting entities
-        //As well as adding the entity manager id to the entity
-        //and changing it when an entity is deleted from the list.
+        public void Update(GameTime gameTime, Map map)
+        {
+            foreach (Entity entity in entities)
+            {
+                entity.Update(gameTime, map);
+            }
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            foreach (Entity entity in entities)
+            {
+                entity.Draw(spriteBatch);
+            }
+        }
+
+        public void AddEntity(Entity entity)
+        {
+            entities.Add(entity);
+            //Subtract one from the count so that you know which spot in the list the particular entity is.
+            //It would either be subtracting one here or subtracting one every place this is referenced.
+            entity.ManagerID = entities.Count - 1;
+        }
+
+        public void RemoveEntity(Entity entity)
+        {
+            entities.RemoveAt(entity.ManagerID);
+            for (int i = entity.ManagerID; i < entities.Count; i++)
+            {
+                //decrease the entities id by 1 to adjust for removing one of the entities.
+                entities[i].ManagerID -= 1;
+            }
+        }
+
 
         #endregion
 

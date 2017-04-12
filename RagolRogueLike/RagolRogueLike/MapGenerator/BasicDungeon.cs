@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 using RagolRogueLike.TileEngine;
 using RagolRogueLike.PlayerClasses;
+using RagolRogueLike.Entities;
 
 namespace RagolRogueLike.MapGenerator
 {
@@ -36,6 +38,8 @@ namespace RagolRogueLike.MapGenerator
     {
         #region Field Region
 
+        SpriteFont entityFont;
+
         int stairsDownX;
         int stairsDownY;
         int stairsUpX;
@@ -43,6 +47,7 @@ namespace RagolRogueLike.MapGenerator
 
         Tile[,] dungeon;
         Player player;
+        EntityManager entities;
 
         List<Rect> rooms;
         const int roomMinSize = 6;
@@ -57,10 +62,13 @@ namespace RagolRogueLike.MapGenerator
 
         #region Constructor Region
 
-        public BasicDungeon(Tile[,] dungeon, Player player)
+        public BasicDungeon(Tile[,] dungeon, Player player, SpriteFont entityFont)
         {
             this.dungeon = dungeon;
             this.player = player;
+            this.entityFont = entityFont;
+
+            entities = new EntityManager();
 
             rooms = new List<Rect>();
         }
@@ -123,6 +131,9 @@ namespace RagolRogueLike.MapGenerator
 
                 player.Position = new Vector2(playerX * 16, playerY * 16);
                 player.Camera.LockToPlayer(player);
+
+                Entity testEntity = new Entity("@", Color.Green, entityFont, new Vector2((playerX + 1) * 16, (playerY + 1) * 16));
+                entities.AddEntity(testEntity);
 
                 stairsUpX = playerX;
                 stairsUpY = playerY;
@@ -207,6 +218,11 @@ namespace RagolRogueLike.MapGenerator
             }
 
             return false;
+        }
+
+        public EntityManager GetEntities()
+        {
+            return entities;
         }
 
         #endregion

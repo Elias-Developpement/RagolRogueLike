@@ -29,6 +29,8 @@ namespace RagolRogueLike.Entities
         string symbol;
         Color color;
         bool block;
+
+        //Gives the exact position of the entity in the manager list.
         int managerID;
 
         Vector2 position;
