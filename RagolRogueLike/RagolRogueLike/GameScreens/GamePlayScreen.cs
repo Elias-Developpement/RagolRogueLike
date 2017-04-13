@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 using RagolRogueLike.GameStates;
 using RagolRogueLike.Controls;
@@ -32,9 +33,13 @@ namespace RagolRogueLike.GameScreens
 
         Game1 gameRef;
 
+        Viewport defaultViewport;
         Viewport mapViewport;
         Viewport statsViewport;
         Viewport messageViewport;
+
+        bool InventoryOpen = false;
+        
 
         #endregion
 
@@ -69,6 +74,8 @@ namespace RagolRogueLike.GameScreens
             player = new Player("@", Color.White, EntityFont, new Vector2(16, 16), GameRef.screenRectangle);
             dungeon = new Dungeon(EntityFont, player);
 
+            defaultViewport = GameRef.GraphicsDevice.Viewport;
+
             mapViewport = GameRef.GraphicsDevice.Viewport;
             mapViewport.Width = 3 * mapViewport.Width / 4;
             mapViewport.Height = 7 * mapViewport.Height / 8;
@@ -91,6 +98,11 @@ namespace RagolRogueLike.GameScreens
         {
             dungeon.Update(gameTime);
             base.Update(gameTime);
+
+            if (InputHandler.KeyReleased(Keys.I))
+            {
+                InventoryOpen = !InventoryOpen;
+            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -120,6 +132,22 @@ namespace RagolRogueLike.GameScreens
             base.Draw(gameTime);
 
             GameRef.spriteBatch.End();
+
+            //Area to draw on the entire screen for things such as character stats and inventory.
+            GameRef.spriteBatch.Begin();
+
+            GraphicsDevice.Viewport = defaultViewport;
+
+            if (InventoryOpen)
+            {
+                gui.DrawInventory(GameRef.spriteBatch);
+            }
+
+            base.Draw(gameTime);
+
+            GameRef.spriteBatch.End();
+
+
         }
 
         #endregion

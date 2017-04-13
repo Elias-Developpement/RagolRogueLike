@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using RagolRogueLike.TileEngine;
 using RagolRogueLike.Entities;
 using RagolRogueLike.PathFinding;
+using RagolRogueLike.GameObject;
 
 namespace RagolRogueLike.PlayerClasses
 {
@@ -21,6 +22,8 @@ namespace RagolRogueLike.PlayerClasses
         string symbol;
         Color color;
         bool block;
+
+        ItemManager inventory;
 
         Vector2 position;
         SpriteFont spriteFont;
@@ -68,6 +71,11 @@ namespace RagolRogueLike.PlayerClasses
             get { return currentHealth * 100 / maxHealth; }
         }
 
+        public ItemManager Inventory
+        {
+            get { return inventory; }
+        }
+
         #endregion
         
         #region Constructor Region
@@ -79,6 +87,8 @@ namespace RagolRogueLike.PlayerClasses
             block = true;
             this.spriteFont = spriteFont;
             this.position = position;
+
+            inventory = new ItemManager();
 
             camera = new Camera(viewportRect);
 
@@ -228,5 +238,10 @@ namespace RagolRogueLike.PlayerClasses
 
         #endregion
 
+        #region Inventory Region
+
+
+
+        #endregion
     }
 }

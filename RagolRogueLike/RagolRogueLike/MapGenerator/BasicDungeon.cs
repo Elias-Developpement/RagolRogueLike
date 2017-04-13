@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using RagolRogueLike.TileEngine;
 using RagolRogueLike.PlayerClasses;
 using RagolRogueLike.Entities;
+using RagolRogueLike.GameObject;
 
 namespace RagolRogueLike.MapGenerator
 {
@@ -48,6 +49,7 @@ namespace RagolRogueLike.MapGenerator
         Tile[,] dungeon;
         Player player;
         EntityManager entities;
+        ItemManager items;
 
         List<Rect> rooms;
         const int roomMinSize = 6;
@@ -69,6 +71,7 @@ namespace RagolRogueLike.MapGenerator
             this.entityFont = entityFont;
 
             entities = new EntityManager();
+            items = new ItemManager();
 
             rooms = new List<Rect>();
         }
@@ -131,6 +134,9 @@ namespace RagolRogueLike.MapGenerator
 
                 player.Position = new Vector2(playerX * 16, playerY * 16);
                 player.Camera.LockToPlayer(player);
+
+                Item testItem = new Item("potion", "!", Color.Orange, entityFont, new Vector2((playerX - 1) * 16, playerY * 16));
+                items.AddItem(testItem);
 
                 Entity testEntity = new Entity("@", Color.Green, entityFont, new Vector2((playerX + 1) * 16, (playerY + 1) * 16));
                 entities.AddEntity(testEntity);
@@ -223,6 +229,11 @@ namespace RagolRogueLike.MapGenerator
         public EntityManager GetEntities()
         {
             return entities;
+        }
+
+        public ItemManager getItems()
+        {
+            return items;
         }
 
         #endregion

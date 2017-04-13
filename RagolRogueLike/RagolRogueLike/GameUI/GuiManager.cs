@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 
 using RagolRogueLike.PlayerClasses;
 using RagolRogueLike.Controls;
+using RagolRogueLike.GameObject;
 
 namespace RagolRogueLike.GameUI
 {
@@ -80,12 +82,41 @@ namespace RagolRogueLike.GameUI
             spriteBatch.DrawString(guiFont, "test", new Vector2(5, 5), Color.White);
         }
 
+        public void DrawInventory(SpriteBatch spriteBatch)
+        {   
+            //Bounds for menus that open when a key is pressed.
+            //Kind of looks too big right now, may end up changing this.
+            DrawMenuBorder(spriteBatch);
+
+            spriteBatch.DrawString(guiFont, "Inventory: ", new Vector2(48, 38), Color.White);
+
+            int x = 60;
+            int y = 53;
+
+            foreach (Item item in player.Inventory.Items)
+            {
+                spriteBatch.DrawString(guiFont, item.Name, new Vector2(x, y), Color.White);
+                x += 12;
+                y += 15;
+            }
+        }
+
         //Used to create a white rectangle that can be colored when drawn.
         private Texture2D DrawRectangle()
         {
             var rect = new Texture2D(gameRef.GraphicsDevice, 1, 1);
             rect.SetData(new[] { Color.White });
             return rect;
+        }
+
+        #endregion
+
+        #region Menu GUI Region
+
+        private void DrawMenuBorder(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(RectTexture, new Rectangle(40, 30, 944, 708), Color.White);
+            spriteBatch.Draw(RectTexture, new Rectangle(43, 33, 938, 702), Color.Black);
         }
 
         #endregion

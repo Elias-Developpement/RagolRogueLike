@@ -13,6 +13,7 @@ using RagolRogueLike.MapGenerator;
 using RagolRogueLike.TileEngine;
 using RagolRogueLike.PlayerClasses;
 using RagolRogueLike.Entities;
+using RagolRogueLike.GameObject;
 
 namespace RagolRogueLike.World
 {
@@ -25,6 +26,7 @@ namespace RagolRogueLike.World
         int floor = 0;
         List<Map> dungeon;
         List<EntityManager> entities;
+        List<ItemManager> items;
 
         SpriteFont tileFont;
 
@@ -45,6 +47,7 @@ namespace RagolRogueLike.World
 
             dungeon = new List<Map>();
             entities = new List<EntityManager>();
+            items = new List<ItemManager>();
 
             //Add the first level of the dungeon to the game.
             Map firstLevel = new Map(50, 50, tileFont);
@@ -57,8 +60,9 @@ namespace RagolRogueLike.World
             dungeon[floor].FindStairsUp();
             dungeon[floor].FindStairsDown();
 
-            //Retrieve the entities and add it to the floor.
+            //Retrieve the entities and items and add it to the floor.
             entities.Add(level.GetEntities());
+            items.Add(level.getItems());
         }
 
         #endregion
@@ -69,11 +73,13 @@ namespace RagolRogueLike.World
         {
             player.Update(gameTime, dungeon[floor], entities[floor]);
             ChangeLevel();
+            PickUpItem();
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             dungeon[floor].Draw(spriteBatch, player.Camera);
+            items[floor].Draw(spriteBatch);
             entities[floor].Draw(spriteBatch);
         }
         
@@ -91,6 +97,7 @@ namespace RagolRogueLike.World
                     dungeon[floor + 1].FindStairsDown();
                     dungeon[floor + 1].FindStairsUp();
                     entities.Add(newGen.GetEntities());
+                    items.Add(newGen.getItems());
                 }
                 floor++;
                 player.Position = new Vector2(dungeon[floor].StairsUpX * 16, dungeon[floor].StairsUpY * 16);
@@ -105,6 +112,23 @@ namespace RagolRogueLike.World
 
                     player.Position = new Vector2(dungeon[floor].StairsDownX * 16, dungeon[floor].StairsDownY * 16);
                     player.Camera.LockToPlayer(player);
+                }
+            }
+        }
+
+        //TODO: Find a better place to put this code.
+        private void PickUpItem()
+        {
+            if (InputHandler.KeyReleased(Keys.E))
+            {
+                foreach (Item item in items[floor].Items)
+                {
+                    if (item.Position == player.Position)
+                    {
+                        player.Inventory.AddItem(item);
+                        items[floor].RemoveItem(item);
+                        break;
+                    }
                 }
             }
         }

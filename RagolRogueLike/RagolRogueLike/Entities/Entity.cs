@@ -89,6 +89,10 @@ namespace RagolRogueLike.Entities
             spriteBatch.DrawString(spriteFont, symbol, position, color);
         }
 
+        #endregion
+
+        #region Combat Region
+
         private void CheckHealth()
         {
             if (currentHealth <= 0)

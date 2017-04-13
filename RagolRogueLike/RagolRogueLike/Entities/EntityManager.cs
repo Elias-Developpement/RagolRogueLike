@@ -50,7 +50,7 @@ namespace RagolRogueLike.Entities
         }
 
         #endregion
-
+        
         #region Method Region
 
         public void Update(GameTime gameTime, Map map)
