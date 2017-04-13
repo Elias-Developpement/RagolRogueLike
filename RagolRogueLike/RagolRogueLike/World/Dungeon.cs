@@ -125,8 +125,8 @@ namespace RagolRogueLike.World
                 {
                     if (item.Position == player.Position)
                     {
-                        player.Inventory.AddItem(item);
                         items[floor].RemoveItem(item);
+                        player.Inventory.AddItem(item);
                         break;
                     }
                 }

@@ -52,9 +52,9 @@ namespace RagolRogueLike.GameObject
             item.ManagerID = items.Count - 1;
         }
 
+
         public void RemoveItem(Item item)
         {
-            //TODO: Add in removing the item and moving it to someones inventory.
             items.RemoveAt(item.ManagerID);
             for (int i = item.ManagerID; i < items.Count; i++)
             {

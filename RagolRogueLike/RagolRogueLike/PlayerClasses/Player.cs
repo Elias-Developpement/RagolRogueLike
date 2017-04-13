@@ -24,6 +24,7 @@ namespace RagolRogueLike.PlayerClasses
         bool block;
 
         ItemManager inventory;
+        bool menuOpen;
 
         Vector2 position;
         SpriteFont spriteFont;
@@ -76,6 +77,12 @@ namespace RagolRogueLike.PlayerClasses
             get { return inventory; }
         }
 
+        public bool MenuOpen
+        {
+            get { return menuOpen; }
+            set { menuOpen = value; }
+        }
+
         #endregion
         
         #region Constructor Region
@@ -87,6 +94,8 @@ namespace RagolRogueLike.PlayerClasses
             block = true;
             this.spriteFont = spriteFont;
             this.position = position;
+
+            menuOpen = false;
 
             inventory = new ItemManager();
 
@@ -173,33 +182,36 @@ namespace RagolRogueLike.PlayerClasses
                 motion.X = 16;
             }
 
-            if (motion != Vector2.Zero)
+            if (!menuOpen)
             {
-                int x = ((int)position.X + (int)motion.X) / 16;
-                int y = ((int)position.Y + (int)motion.Y) / 16;
-                bool blocked = false;
-                
-                if (map.GetBlocked(x, y))
+                if (motion != Vector2.Zero)
                 {
-                    blocked = true;
-                }
+                    int x = ((int)position.X + (int)motion.X) / 16;
+                    int y = ((int)position.Y + (int)motion.Y) / 16;
+                    bool blocked = false;
 
-                foreach (Entity entity in entities.Entities)
-                {
-                    if ((position + motion) == entity.Position && entity.Block)
+                    if (map.GetBlocked(x, y))
                     {
                         blocked = true;
-                        DealDamage(entity);
-                        break;
                     }
-                }
-                
-                if (blocked == false)
-                {
-                    position += motion;
-                }
 
-                camera.LockToPlayer(this);
+                    foreach (Entity entity in entities.Entities)
+                    {
+                        if ((position + motion) == entity.Position && entity.Block)
+                        {
+                            blocked = true;
+                            DealDamage(entity);
+                            break;
+                        }
+                    }
+
+                    if (blocked == false)
+                    {
+                        position += motion;
+                    }
+
+                    camera.LockToPlayer(this);
+                }
             }
         }
 

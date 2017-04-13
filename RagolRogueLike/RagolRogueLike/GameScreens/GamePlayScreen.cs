@@ -102,6 +102,7 @@ namespace RagolRogueLike.GameScreens
             if (InputHandler.KeyReleased(Keys.I))
             {
                 InventoryOpen = !InventoryOpen;
+                player.MenuOpen = !player.MenuOpen;
             }
         }
 

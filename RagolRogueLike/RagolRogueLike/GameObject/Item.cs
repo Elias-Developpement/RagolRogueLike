@@ -31,7 +31,7 @@ namespace RagolRogueLike.GameObject
         public int ManagerID
         {
             get { return managerID; }
-            internal set { managerID = value; }
+            set { managerID = value; }
         }
 
         public Vector2 Position

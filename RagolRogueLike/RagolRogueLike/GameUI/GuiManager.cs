@@ -24,11 +24,14 @@ namespace RagolRogueLike.GameUI
         Player player;
 
         SpriteFont guiFont;
+        //TODO: Add in a menu font that is larger than the gui font.
+        SpriteFont menuFont;
 
         Viewport sideViewport;
         Viewport messageViewport;
 
         Texture2D RectTexture;
+        
 
         #endregion
         
@@ -59,6 +62,7 @@ namespace RagolRogueLike.GameUI
         {
             ContentManager Content = gameRef.Content;
             guiFont = Content.Load<SpriteFont>(@"Fonts\GuiFont");
+            menuFont = Content.Load<SpriteFont>(@"Fonts\MenuFont");
         }
 
         public void DrawSideView(SpriteBatch spriteBatch)
@@ -88,17 +92,19 @@ namespace RagolRogueLike.GameUI
             //Kind of looks too big right now, may end up changing this.
             DrawMenuBorder(spriteBatch);
 
-            spriteBatch.DrawString(guiFont, "Inventory: ", new Vector2(48, 38), Color.White);
+            spriteBatch.DrawString(menuFont, "Inventory: ", new Vector2(48, 38), Color.White);
 
-            int x = 60;
-            int y = 53;
+            int x = 64;
+            int y = 64;
 
             foreach (Item item in player.Inventory.Items)
             {
-                spriteBatch.DrawString(guiFont, item.Name, new Vector2(x, y), Color.White);
-                x += 12;
-                y += 15;
+                spriteBatch.DrawString(menuFont, item.Name, new Vector2(x, y), Color.White);
+                
+                y += 24;
             }
+
+            spriteBatch.DrawString(menuFont, "Equipped: ", new Vector2(520, 38), Color.White);
         }
 
         //Used to create a white rectangle that can be colored when drawn.
@@ -116,7 +122,8 @@ namespace RagolRogueLike.GameUI
         private void DrawMenuBorder(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(RectTexture, new Rectangle(40, 30, 944, 708), Color.White);
-            spriteBatch.Draw(RectTexture, new Rectangle(43, 33, 938, 702), Color.Black);
+            spriteBatch.Draw(RectTexture, new Rectangle(43, 33, 469, 702), Color.Black);
+            spriteBatch.Draw(RectTexture, new Rectangle(515, 33, 466, 702), Color.Black);
         }
 
         #endregion

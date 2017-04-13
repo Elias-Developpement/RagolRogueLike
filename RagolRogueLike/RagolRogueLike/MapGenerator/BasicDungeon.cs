@@ -51,10 +51,16 @@ namespace RagolRogueLike.MapGenerator
         EntityManager entities;
         ItemManager items;
 
+        Random random;
+
         List<Rect> rooms;
         const int roomMinSize = 6;
         const int roomMaxSize = 10;
         const int maxRooms = 70;
+        
+        //Subtract 1 from these numbers to get the actual max number of items and monsters.
+        const int maxItems = 4;
+        const int maxMonsters = 3;
 
         #endregion
 
@@ -70,6 +76,8 @@ namespace RagolRogueLike.MapGenerator
             this.player = player;
             this.entityFont = entityFont;
 
+            random = new Random(DateTime.Now.Millisecond);
+
             entities = new EntityManager();
             items = new ItemManager();
 
@@ -82,8 +90,6 @@ namespace RagolRogueLike.MapGenerator
 
         public Tile[,] CreateBasicDungeon()
         {
-
-            Random random = new Random(DateTime.Now.Millisecond);
             int num_rooms = 0;
 
 
@@ -128,18 +134,13 @@ namespace RagolRogueLike.MapGenerator
                 }
                 rooms.Add(room);
 
-                Random rnd = new Random(DateTime.Now.Millisecond);
-                int playerX = rnd.Next(x, x + w);
-                int playerY = rnd.Next(y, y + h);
+                int playerX = random.Next(x, x + w);
+                int playerY = random.Next(y, y + h);
 
                 player.Position = new Vector2(playerX * 16, playerY * 16);
                 player.Camera.LockToPlayer(player);
 
-                Item testItem = new Item("potion", "!", Color.Orange, entityFont, new Vector2((playerX - 1) * 16, playerY * 16));
-                items.AddItem(testItem);
-
-                Entity testEntity = new Entity("@", Color.Green, entityFont, new Vector2((playerX + 1) * 16, (playerY + 1) * 16));
-                entities.AddEntity(testEntity);
+                
 
                 stairsUpX = playerX;
                 stairsUpY = playerY;
@@ -171,13 +172,36 @@ namespace RagolRogueLike.MapGenerator
                             dungeon[i, j] = new Tile(".", false, Color.White, Color.LightGray, new Vector2(i * 16, j * 16));
                         }
                     }
+                    //Decide on the number of monsters and items to add to the room.
+
+                    int NumItems = random.Next(0, maxItems);
+                    int NumMonsters = random.Next(0, maxMonsters);
+
+                    //Loop for the items to create in the room
+                    for (int i = 0; i < NumItems; i ++)
+                    {
+                        int itemX = random.Next(x, x + w);
+                        int itemY = random.Next(y, y + h);
+
+                        Item item = new Item("Potion", "!", Color.Orange, entityFont, new Vector2(itemX * 16, itemY * 16));
+                        items.AddItem(item);
+                    }
+
+                    for (int m = 0; m < NumMonsters; m++)
+                    {
+                        int monsterX = random.Next(x, x + w);
+                        int monsterY = random.Next(y, y + h);
+
+                        Entity entity = new Entity("O", Color.Green, entityFont, new Vector2(monsterX * 16, monsterY * 16));
+                        entities.AddEntity(entity);
+                    }
+
                     //Get the room count before adding the new room.
                     int roomCount = rooms.Count;
                     rooms.Add(room);
 
                     //Flip a coin to decide which direction to go first
-                    Random coin = new Random(DateTime.Now.Millisecond);
-                    if (coin.Next(0, 2) == 1)
+                    if (random.Next(0, 2) == 1)
                     {
                         //First horizontal then vertical
                         CreateHTunnel(rooms[roomCount - 1].center_x, rooms[roomCount - 1].center_y, room.center_x);
