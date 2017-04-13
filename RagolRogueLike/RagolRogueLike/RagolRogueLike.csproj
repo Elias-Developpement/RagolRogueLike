@@ -74,6 +74,7 @@
     <Compile Include="TileEngine\Map.cs" />
     <Compile Include="TileEngine\Tile.cs" />
     <Compile Include="World\Dungeon.cs" />
+    <Compile Include="World\World.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

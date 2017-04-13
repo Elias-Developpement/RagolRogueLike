@@ -52,7 +52,7 @@ namespace RagolRogueLike.MapGenerator
         List<Rect> rooms;
         const int roomMinSize = 6;
         const int roomMaxSize = 10;
-        const int maxRooms = 150;
+        const int maxRooms = 70;
 
         #endregion
 

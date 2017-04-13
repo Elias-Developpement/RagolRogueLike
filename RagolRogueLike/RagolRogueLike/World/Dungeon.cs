@@ -47,7 +47,7 @@ namespace RagolRogueLike.World
             entities = new List<EntityManager>();
 
             //Add the first level of the dungeon to the game.
-            Map firstLevel = new Map(100, 100, tileFont);
+            Map firstLevel = new Map(50, 50, tileFont);
             dungeon.Add(firstLevel);
 
             //Initialize the dungeon generator
@@ -90,6 +90,7 @@ namespace RagolRogueLike.World
                     dungeon[floor + 1].Tiles = newGen.CreateBasicDungeon();
                     dungeon[floor + 1].FindStairsDown();
                     dungeon[floor + 1].FindStairsUp();
+                    entities.Add(newGen.GetEntities());
                 }
                 floor++;
                 player.Position = new Vector2(dungeon[floor].StairsUpX * 16, dungeon[floor].StairsUpY * 16);
