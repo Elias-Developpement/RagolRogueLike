@@ -95,12 +95,14 @@ namespace RagolRogueLike.Entities
         {
             if (canAct)
             {
-                //TODO: Add collision detection for entities once they start to move.
+                //TODO: Make collision detection better as well as pathfinding.
                 path = manager.Pathfinder.FindPath(position.ToPoint(), player.Position.ToPoint());
+                Vector2 playerPosition = player.Position;
 
                 if (path.Count != 0)
                 {
-                    MoveEntity(path[0]);
+
+                    MoveEntity(path[0], playerPosition);
                 }
             }
         }
@@ -110,13 +112,37 @@ namespace RagolRogueLike.Entities
             spriteBatch.DrawString(spriteFont, symbol, position, color);
         }
 
-        private void MoveEntity(Vector2 node)
+        private void MoveEntity(Vector2 node, Vector2 playerPosition)
         {
+            bool notBlocked = true;
+
             Vector2 motion = node - position;
             //Entity is properly moving towards the player as of right now.
             //And the entity is not moving if it is dead.
 
-            position += motion;
+            //Collision detection
+            //Check the entities.
+            foreach (Entity entity in manager.Entities)
+            {
+                if (entity.position == (position + motion) && entity.Block)
+                {
+                    notBlocked = false;
+                    break;
+                }
+            }
+
+            //Next check if the player is in the position.
+            if (playerPosition == (position + motion))
+            {
+                notBlocked = false;
+
+            }
+
+
+            if (notBlocked)
+            {
+                position += motion;
+            }
 
         }
 

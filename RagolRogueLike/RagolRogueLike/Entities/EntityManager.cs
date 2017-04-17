@@ -70,6 +70,7 @@ namespace RagolRogueLike.Entities
             }
         }
 
+        //TODO: Always draw dead entities on the bottom.
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (Entity entity in entities)
