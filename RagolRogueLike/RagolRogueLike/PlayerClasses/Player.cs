@@ -22,6 +22,7 @@ namespace RagolRogueLike.PlayerClasses
         string symbol;
         Color color;
         bool block;
+        bool hasActed = false;
 
         ItemManager inventory;
         bool menuOpen;
@@ -83,6 +84,11 @@ namespace RagolRogueLike.PlayerClasses
             set { menuOpen = value; }
         }
 
+        public bool HasActed
+        {
+            get { return hasActed; }
+        }
+
         #endregion
         
         #region Constructor Region
@@ -112,6 +118,8 @@ namespace RagolRogueLike.PlayerClasses
 
         public void Update(GameTime gameTime, Map map, EntityManager entities)
         {
+            hasActed = false;
+
             camera.Update(gameTime);
 
             //Debugging code
@@ -208,6 +216,7 @@ namespace RagolRogueLike.PlayerClasses
                     if (blocked == false)
                     {
                         position += motion;
+                        hasActed = true;
                     }
 
                     camera.LockToPlayer(this);

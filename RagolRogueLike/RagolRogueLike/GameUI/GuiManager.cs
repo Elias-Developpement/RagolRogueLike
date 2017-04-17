@@ -24,7 +24,6 @@ namespace RagolRogueLike.GameUI
         Player player;
 
         SpriteFont guiFont;
-        //TODO: Add in a menu font that is larger than the gui font.
         SpriteFont menuFont;
 
         Viewport sideViewport;
@@ -104,6 +103,7 @@ namespace RagolRogueLike.GameUI
                 y += 24;
             }
 
+            //TODO: Add in the equipped area of the inventory.
             spriteBatch.DrawString(menuFont, "Equipped: ", new Vector2(520, 38), Color.White);
         }
 

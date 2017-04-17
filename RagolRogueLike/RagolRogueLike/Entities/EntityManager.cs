@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using RagolRogueLike.TileEngine;
+using RagolRogueLike.PlayerClasses;
+using RagolRogueLike.PathFinding;
 
 namespace RagolRogueLike.Entities
 {
@@ -17,6 +19,8 @@ namespace RagolRogueLike.Entities
 
         List<Entity> entities;
 
+        PathFinder pathFinder;
+
         #endregion
 
         #region Property Region
@@ -24,6 +28,11 @@ namespace RagolRogueLike.Entities
         public List<Entity> Entities
         {
             get { return entities; }
+        }
+
+        internal PathFinder Pathfinder
+        {
+            get { return pathFinder; }
         }
 
         #endregion
@@ -53,11 +62,11 @@ namespace RagolRogueLike.Entities
         
         #region Method Region
 
-        public void Update(GameTime gameTime, Map map)
+        public void Update(GameTime gameTime, Map map, Player player)
         {
             foreach (Entity entity in entities)
             {
-                entity.Update(gameTime, map);
+                entity.Update(gameTime, map, player);
             }
         }
 
@@ -72,6 +81,7 @@ namespace RagolRogueLike.Entities
         public void AddEntity(Entity entity)
         {
             entities.Add(entity);
+            entity.Manager = this;
             //Subtract one from the count so that you know which spot in the list the particular entity is.
             //It would either be subtracting one here or subtracting one every place this is referenced.
             entity.ManagerID = entities.Count - 1;
@@ -85,6 +95,11 @@ namespace RagolRogueLike.Entities
                 //decrease the entities id by 1 to adjust for removing one of the entities.
                 entities[i].ManagerID -= 1;
             }
+        }
+
+        public void StartPathfinder(Tile[,] tiles)
+        {
+            pathFinder = new PathFinder(tiles);
         }
 
 

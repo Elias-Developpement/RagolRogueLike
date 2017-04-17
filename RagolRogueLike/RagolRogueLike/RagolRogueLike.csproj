@@ -61,6 +61,7 @@
     <Compile Include="GameStates\GameState.cs" />
     <Compile Include="GameStates\GameStateManager.cs" />
     <Compile Include="GameUI\GuiManager.cs" />
+    <Compile Include="GameUI\MessageHandler.cs" />
     <Compile Include="InputHandler.cs" />
     <Compile Include="MapGenerator\BasicDungeon.cs" />
     <Compile Include="PathFinding\BresenhamLine.cs" />

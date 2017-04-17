@@ -115,6 +115,9 @@ namespace RagolRogueLike.MapGenerator
             stairsDownY = random.Next(rooms[lastRoom].y, rooms[lastRoom].y + rooms[lastRoom].height);
             dungeon[stairsDownX, stairsDownY] = new Tile(">", false, Color.White, Color.LightGray, new Vector2(stairsDownX * 16, stairsDownY * 16));
 
+            //Initialize the pathfinder for this floor of the dungeon.
+            entities.StartPathfinder(dungeon);
+
             return dungeon;
         }
 
@@ -140,7 +143,8 @@ namespace RagolRogueLike.MapGenerator
                 player.Position = new Vector2(playerX * 16, playerY * 16);
                 player.Camera.LockToPlayer(player);
 
-                
+                //Entity testentity = new Entity("@", Color.Green, entityFont, new Vector2((playerX + 1) * 16, (playerY + 1) * 16));
+                //entities.AddEntity(testentity);
 
                 stairsUpX = playerX;
                 stairsUpY = playerY;

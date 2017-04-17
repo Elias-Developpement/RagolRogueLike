@@ -35,21 +35,22 @@ namespace RagolRogueLike.PathFinding
 
         #region Constructor Region
 
-        public PathFinder(Map map)
+        public PathFinder(Tile[,] tiles)
         {
             
             //This should create the map into tiles of the proper size 16*16.
             mapWidth = Map.MapWidthInPixels / numberNodesInTile;
             mapHeight = Map.MapHeightInPixels / numberNodesInTile;
 
-            InitializeSearchNodes(map);
+            InitializeSearchNodes(tiles);
+
         }
 
         #endregion
 
         #region Method Region
 
-        private void InitializeSearchNodes(Map map)
+        private void InitializeSearchNodes(Tile[,] tiles)
         {
             searchNodes = new SearchNode[mapWidth, mapHeight];
 
@@ -65,15 +66,11 @@ namespace RagolRogueLike.PathFinding
                     node.Position = new Point(x * numberNodesInTile, y * numberNodesInTile);
 
                     //Only store nodes that are walkable
-                    //TODO: Uncomment before trying to use
-                    /*foreach (Tile tile in Map.BlockedTiles)
+                    //Check the tile if it blocks walking.
+                    if (tiles[x, y].Block == true)
                     {
-                        if (tile.PositionRectangle.Contains(node.Position))
-                        {
-                            node.Walkable = false;
-                        }
-
-                    }*/
+                        node.Walkable = false;
+                    }
 
                     if (node.Walkable)
                     {
@@ -147,8 +144,8 @@ namespace RagolRogueLike.PathFinding
             ResetSearchNodes();
 
             //Store reference to start and end nodes for convenience
-            SearchNode startNode = searchNodes[startPoint.X, startPoint.Y];
-            SearchNode endNode = searchNodes[endPoint.X, endPoint.Y];
+            SearchNode startNode = searchNodes[startPoint.X / 16, startPoint.Y / 16];
+            SearchNode endNode = searchNodes[endPoint.X / 16, endPoint.Y / 16];
 
             //Step 2: Set start node's G to 0 and its F value to H.
             startNode.InOpenList = true;

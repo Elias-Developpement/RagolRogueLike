@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using RagolRogueLike.TileEngine;
+using RagolRogueLike.PathFinding;
+using RagolRogueLike.PlayerClasses;
 
 namespace RagolRogueLike.Entities
 {
@@ -29,12 +31,17 @@ namespace RagolRogueLike.Entities
         string symbol;
         Color color;
         bool block;
+        bool canAct = true;
 
         //Gives the exact position of the entity in the manager list.
         int managerID;
+        EntityManager manager;
 
         Vector2 position;
         SpriteFont spriteFont;
+
+
+        List<Vector2> path;
 
         int maxHealth;
         int currentHealth;
@@ -42,6 +49,11 @@ namespace RagolRogueLike.Entities
         #endregion
 
         #region Property Region
+
+        internal EntityManager Manager
+        {
+            set { manager = value; }
+        }
 
         public int ManagerID
         {
@@ -79,14 +91,33 @@ namespace RagolRogueLike.Entities
 
         #region Method Region
 
-        public void Update(GameTime gameTime, Map map)
+        public void Update(GameTime gameTime, Map map, Player player)
         {
-            //TODO: Add collision detection for entities once they start to move.
+            if (canAct)
+            {
+                //TODO: Add collision detection for entities once they start to move.
+                path = manager.Pathfinder.FindPath(position.ToPoint(), player.Position.ToPoint());
+
+                if (path.Count != 0)
+                {
+                    MoveEntity(path[0]);
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(spriteFont, symbol, position, color);
+        }
+
+        private void MoveEntity(Vector2 node)
+        {
+            Vector2 motion = node - position;
+            //Entity is properly moving towards the player as of right now.
+            //And the entity is not moving if it is dead.
+
+            position += motion;
+
         }
 
         #endregion
@@ -99,6 +130,7 @@ namespace RagolRogueLike.Entities
             {
                 color = Color.Red;
                 block = false;
+                canAct = false;
             }
             else if (currentHealth > maxHealth)
             {

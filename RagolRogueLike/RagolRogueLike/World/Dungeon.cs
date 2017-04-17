@@ -72,6 +72,11 @@ namespace RagolRogueLike.World
         public void Update(GameTime gameTime)
         {
             player.Update(gameTime, dungeon[floor], entities[floor]);
+
+            if (player.HasActed)
+            {
+                entities[floor].Update(gameTime, dungeon[floor], player);
+            }
             ChangeLevel();
             PickUpItem();
         }
