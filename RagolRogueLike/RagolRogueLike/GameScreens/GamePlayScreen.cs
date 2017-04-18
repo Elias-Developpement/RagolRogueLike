@@ -49,6 +49,8 @@ namespace RagolRogueLike.GameScreens
 
         #region Constructor Region
 
+
+        //TODO: Create a way to restart the game after losing.
         public GamePlayScreen(Game game, GameStateManager manager) : base(game, manager)
         {
             gameRef = (Game1)game;
@@ -103,6 +105,11 @@ namespace RagolRogueLike.GameScreens
             {
                 InventoryOpen = !InventoryOpen;
                 player.MenuOpen = !player.MenuOpen;
+            }
+
+            if (player.CurrentHealth <= 0)
+            {
+                StateManager.PushState(GameRef.endGameScreen);
             }
         }
 

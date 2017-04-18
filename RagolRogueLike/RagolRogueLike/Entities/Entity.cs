@@ -45,6 +45,7 @@ namespace RagolRogueLike.Entities
 
         int maxHealth;
         int currentHealth;
+        int damage;
 
         #endregion
 
@@ -85,6 +86,7 @@ namespace RagolRogueLike.Entities
 
             maxHealth = 10;
             currentHealth = maxHealth;
+            damage = 3;
         }
 
         #endregion
@@ -102,7 +104,7 @@ namespace RagolRogueLike.Entities
                 if (path.Count != 0)
                 {
 
-                    MoveEntity(path[0], playerPosition);
+                    MoveEntity(path[0], player);
                 }
             }
         }
@@ -112,7 +114,7 @@ namespace RagolRogueLike.Entities
             spriteBatch.DrawString(spriteFont, symbol, position, color);
         }
 
-        private void MoveEntity(Vector2 node, Vector2 playerPosition)
+        private void MoveEntity(Vector2 node, Player player)
         {
             bool notBlocked = true;
 
@@ -132,10 +134,10 @@ namespace RagolRogueLike.Entities
             }
 
             //Next check if the player is in the position.
-            if (playerPosition == (position + motion))
+            if (player.Position == (position + motion))
             {
                 notBlocked = false;
-
+                DealDamagePlayer(player);
             }
 
 
@@ -168,6 +170,16 @@ namespace RagolRogueLike.Entities
         {
             currentHealth -= damage;
             CheckHealth();
+        }
+
+        private void DealDamagePlayer(Player player)
+        {
+            player.TakeDamage(damage);
+        }
+
+        private void DealDamageEntity(Entity entity)
+        {
+
         }
 
         #endregion

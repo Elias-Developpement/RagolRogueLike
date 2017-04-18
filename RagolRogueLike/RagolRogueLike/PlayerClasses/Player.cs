@@ -250,6 +250,7 @@ namespace RagolRogueLike.PlayerClasses
             {
                 color = Color.Red;
                 block = false;
+                //TODO: Make the game end if health is zero.
             }
             else if (currentHealth > maxHealth)
             {
