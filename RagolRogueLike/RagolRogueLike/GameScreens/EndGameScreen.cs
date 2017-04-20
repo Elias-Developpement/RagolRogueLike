@@ -117,7 +117,7 @@ namespace RagolRogueLike.GameScreens
         {
             if (sender == restartGame)
             {
-                StateManager.ChangeState(GameRef.gamePlayScreen);
+                StateManager.ChangeState(GameRef.characterCreation);
 
             }
 

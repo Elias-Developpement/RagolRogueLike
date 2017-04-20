@@ -160,7 +160,7 @@ namespace RagolRogueLike.GameScreens
 
         public void RestartGame()
         {
-
+            LoadContent();
         }
 
         #endregion

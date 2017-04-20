@@ -143,6 +143,7 @@ namespace RagolRogueLike.GameScreens
 
             StateManager.PopState();
             StateManager.PushState(GameRef.gamePlayScreen);
+            GameRef.gamePlayScreen.RestartGame();
         }
 
         #endregion
