@@ -50,7 +50,6 @@ namespace RagolRogueLike.GameScreens
         #region Constructor Region
 
 
-        //TODO: Create a way to restart the game after losing.
         public GamePlayScreen(Game game, GameStateManager manager) : base(game, manager)
         {
             gameRef = (Game1)game;
@@ -158,9 +157,13 @@ namespace RagolRogueLike.GameScreens
 
         }
 
-        public void RestartGame()
+        internal void RestartGame(playerInfo choices)
         {
             LoadContent();
+
+            player.SetClass = choices.Class;
+            player.Race = choices.race;
+            player.Gender = choices.gender;
         }
 
         #endregion

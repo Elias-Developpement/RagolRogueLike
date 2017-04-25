@@ -14,6 +14,14 @@ using RagolRogueLike.GameStates;
 
 namespace RagolRogueLike.GameScreens
 {
+    internal struct playerInfo
+    {
+        public string name;
+        public string race;
+        public string gender;
+        public string Class;
+    }
+
     public class CharacterCreation : BaseGameState
     {
 
@@ -130,7 +138,7 @@ namespace RagolRogueLike.GameScreens
             startGame.Text = "Begin your journey";
             startGame.Size = startGame.SpriteFont.MeasureString(startGame.Text);
             startGame.Selected += linkLabelSelected;
-            startGame.Position = new Vector2(0, 160);
+            startGame.Position = new Vector2(402, 708);
             ControlManager.Add(startGame);
 
             ControlManager.NextControl();
@@ -140,10 +148,14 @@ namespace RagolRogueLike.GameScreens
         private void linkLabelSelected(object sender, EventArgs e)
         {
             InputHandler.Flush();
+            playerInfo playerChoices = new playerInfo();
+            playerChoices.Class = classScroll.SelectedItem;
+            playerChoices.gender = genderScroll.SelectedItem;
+            playerChoices.race = raceScroll.SelectedItem;
 
             StateManager.PopState();
             StateManager.PushState(GameRef.gamePlayScreen);
-            GameRef.gamePlayScreen.RestartGame();
+            GameRef.gamePlayScreen.RestartGame(playerChoices);
         }
 
         #endregion

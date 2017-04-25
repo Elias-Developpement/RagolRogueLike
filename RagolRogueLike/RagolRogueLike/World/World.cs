@@ -58,7 +58,7 @@ namespace RagolRogueLike.World
             {
                 for (int y = (int)currentChunk.Y - 1; y < (int)currentChunk.Y + 1; y++)
                 {
-                    Chunks[x, y].Draw(spriteBatch, player.Camera);
+                    //Chunks[x, y].Draw(spriteBatch, player.Camera, player);
                 }
             }
         }

@@ -83,9 +83,9 @@ namespace RagolRogueLike.World
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            dungeon[floor].Draw(spriteBatch, player.Camera);
+            dungeon[floor].Draw(spriteBatch, player.Camera, player, entities[floor]);
             items[floor].Draw(spriteBatch);
-            entities[floor].Draw(spriteBatch);
+            entities[floor].Draw(spriteBatch, player);
         }
         
         private void ChangeLevel()

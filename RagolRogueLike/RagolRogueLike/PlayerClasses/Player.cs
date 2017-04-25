@@ -24,6 +24,10 @@ namespace RagolRogueLike.PlayerClasses
         bool block;
         bool hasActed = false;
 
+        string race;
+        string Class;
+        string gender;
+
         ItemManager inventory;
         bool menuOpen;
 
@@ -89,6 +93,21 @@ namespace RagolRogueLike.PlayerClasses
             get { return hasActed; }
         }
 
+        public string Race
+        {
+            set { race = value; }
+        }
+
+        public string Gender
+        {
+            set { gender = value; }
+        }
+
+        public string SetClass
+        {
+            set { Class = value; }
+        }
+
         #endregion
         
         #region Constructor Region
@@ -146,9 +165,9 @@ namespace RagolRogueLike.PlayerClasses
                     camera.LockToPlayer(this);
             }
             
-            if (InputHandler.KeyReleased(Keys.Space))
+            if (InputHandler.KeyPressed(Keys.Space))
             {
-                camera.ToggleCameraMode();
+                hasActed = true;
             }
 
             Vector2 motion = new Vector2();

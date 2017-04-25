@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using RagolRogueLike.PlayerClasses;
+using RagolRogueLike.Entities;
+
 
 namespace RagolRogueLike.TileEngine
 {
@@ -21,6 +24,8 @@ namespace RagolRogueLike.TileEngine
         int stairsDownY;
         int stairsUpX;
         int stairsUpY;
+
+        int chunkLocation;
 
         Tile[,] tiles;
 
@@ -66,6 +71,13 @@ namespace RagolRogueLike.TileEngine
             get { return stairsUpY; }
         }
 
+        //Use this if an overworld is ever added in. But currently don't bother with it.
+        public int ChunkLocation
+        {
+            get { return chunkLocation; }
+            set { chunkLocation = value; }
+        }
+
         #endregion
 
         #region Constructor Region
@@ -78,6 +90,8 @@ namespace RagolRogueLike.TileEngine
             tiles = new Tile[mapWidth, mapHeight];
 
             this.tileFont = tileFont;
+
+            chunkLocation = 1;
 
             fillMap();
             //fillBlocked();
@@ -93,6 +107,8 @@ namespace RagolRogueLike.TileEngine
 
             tiles = new Tile[mapWidth, mapHeight];
 
+            chunkLocation = 1;
+
             fillMap();
         }
 
@@ -102,7 +118,7 @@ namespace RagolRogueLike.TileEngine
         #region Method Region
 
         //TODO: Add background color to tiles.
-        public void Draw(SpriteBatch spriteBatch, Camera camera)
+        public void Draw(SpriteBatch spriteBatch, Camera camera, Player player, EntityManager entities)
         {
             Point cameraPoint = Engine.VectorToCell(camera.Position * (1 / camera.Zoom));
             Point viewPoint = Engine.VectorToCell(new Vector2((camera.Position.X + camera.ViewportRectangle.Width) * (1 / camera.Zoom), (camera.Position.Y + camera.ViewportRectangle.Height) * (1 / camera.Zoom)));
@@ -116,29 +132,53 @@ namespace RagolRogueLike.TileEngine
             max.X = Math.Min(viewPoint.X + 1, mapWidth);
             max.Y = Math.Min(viewPoint.Y + 1, mapHeight);
 
-
-            Rectangle destination = new Rectangle(0, 0, Engine.TileWidth, Engine.TileHeight);
-
-            //TODO: Don't draw tiles that are being occupied.
             for (int y = min.Y; y < max.Y; y++)
             {
-                destination.Y = y * Engine.TileHeight;
-
                 for (int x = min.X; x < max.X; x++)
                 {
-                    destination.X = x * Engine.TileWidth;
-
                     //Only draw tiles that are visible.
                     if (tiles[x, y] != null)
                     {
-                        if (tiles[x, y].IsVisible)
+                        bool spaceOccupied = false;
+
+                        foreach (Entity entity in entities.Entities)
                         {
-                            spriteBatch.DrawString(tileFont, tiles[x, y].Symbol, tiles[x, y].Position, tiles[x, y].Color);
+                            if (entity.Position == tiles[x, y].Position)
+                            {
+                                spaceOccupied = true;
+                                break;
+                            }
                         }
-                        //Or draw tiles that have been discovered but are no longer visible, but draw them gray instead.
-                        else if (tiles[x, y].IsDiscovered)
+
+                        foreach (Entity entity in entities.DeadEntities)
                         {
-                            spriteBatch.DrawString(tileFont, tiles[x, y].Symbol, tiles[x, y].Position, Color.Gray);
+                            if (spaceOccupied)
+                            {
+                                break;
+                            }
+                            if (entity.Position == tiles[x, y].Position)
+                            {
+                                spaceOccupied = true;
+                                break;
+                            }
+                        }
+
+                        if (player.Position == tiles[x, y].Position)
+                        {
+                            spaceOccupied = true;
+                        }
+
+                        if (!spaceOccupied)
+                        {
+                            if (tiles[x, y].IsVisible)
+                            {
+                                spriteBatch.DrawString(tileFont, tiles[x, y].Symbol, tiles[x, y].Position, tiles[x, y].Color);
+                            }
+                            //Or draw tiles that have been discovered but are no longer visible, but draw them gray instead.
+                            else if (tiles[x, y].IsDiscovered)
+                            {
+                                spriteBatch.DrawString(tileFont, tiles[x, y].Symbol, tiles[x, y].Position, Color.Gray);
+                            }
                         }
                     }
                 }

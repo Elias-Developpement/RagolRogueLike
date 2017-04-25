@@ -159,6 +159,7 @@ namespace RagolRogueLike.Entities
                 color = Color.Red;
                 block = false;
                 canAct = false;
+                manager.RemoveEntity(this);
             }
             else if (currentHealth > maxHealth)
             {
