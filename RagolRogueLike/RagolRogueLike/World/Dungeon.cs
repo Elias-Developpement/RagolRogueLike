@@ -55,14 +55,19 @@ namespace RagolRogueLike.World
 
             //Initialize the dungeon generator
             //Using the basic one that creates a pretty shitty dungeon.
-            BasicDungeon level = new BasicDungeon(dungeon[floor].Tiles, player, tileFont);
+            /*BasicDungeon level = new BasicDungeon(dungeon[floor].Tiles, player, tileFont);
             dungeon[floor].Tiles = level.CreateBasicDungeon();
             dungeon[floor].FindStairsUp();
-            dungeon[floor].FindStairsDown();
+            dungeon[floor].FindStairsDown();*/
+
+            CellularAutomata level = new CellularAutomata(50, 50, 20);
+            dungeon[floor].Tiles = level.GenerateMap();
+            entities.Add(new EntityManager());
+            items.Add(new ItemManager());
 
             //Retrieve the entities and items and add it to the floor.
-            entities.Add(level.GetEntities());
-            items.Add(level.getItems());
+            //entities.Add(level.GetEntities());
+            //items.Add(level.getItems());
         }
 
         #endregion

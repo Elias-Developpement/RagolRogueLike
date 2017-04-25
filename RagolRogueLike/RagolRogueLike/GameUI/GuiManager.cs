@@ -26,7 +26,10 @@ namespace RagolRogueLike.GameUI
         SpriteFont guiFont;
         SpriteFont menuFont;
 
+        //Dimensions of the viewport
+        //256x768
         Viewport sideViewport;
+        //768x96
         Viewport messageViewport;
 
         Texture2D RectTexture;
@@ -65,13 +68,13 @@ namespace RagolRogueLike.GameUI
         }
 
         //TODO: add in items that are being stood on display on the side view.
+        //could just make this a part of messages.
         public void DrawSideView(SpriteBatch spriteBatch)
         {
             gameRef.GraphicsDevice.Viewport = sideViewport;
 
             //Bound for the Side viewport to look nicer, probs will change this.
             DrawBorder(spriteBatch);
-
 
             DrawHealth(spriteBatch);
         }
@@ -161,6 +164,7 @@ namespace RagolRogueLike.GameUI
             spriteBatch.Draw(RectTexture, new Rectangle(9, 9, 238, 750), Color.Black);
         }
 
+        
         #endregion
 
         #region Drawing Methods Region
