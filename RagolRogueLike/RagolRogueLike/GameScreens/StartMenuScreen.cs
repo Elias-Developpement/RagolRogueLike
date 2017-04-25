@@ -52,21 +52,21 @@ namespace RagolRogueLike.GameScreens
             ContentManager Content = Game.Content;
 
             startGame = new LinkLabel();
-            startGame.Text = "The story begins";
+            startGame.Text = "Start Game";
             startGame.Size = startGame.SpriteFont.MeasureString(startGame.Text);
             startGame.Selected += new EventHandler(menuItem_Selected);
 
             ControlManager.Add(startGame);
 
             loadGame = new LinkLabel();
-            loadGame.Text = "The story continues";
+            loadGame.Text = "Continue Game";
             loadGame.Size = loadGame.SpriteFont.MeasureString(loadGame.Text);
             loadGame.Selected += menuItem_Selected;
 
             ControlManager.Add(loadGame);
 
             exitGame = new LinkLabel();
-            exitGame.Text = "The story ends";
+            exitGame.Text = "Exit";
             exitGame.Size = exitGame.SpriteFont.MeasureString(exitGame.Text);
             exitGame.Selected += menuItem_Selected;
 

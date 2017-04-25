@@ -22,6 +22,7 @@ namespace RagolRogueLike.GameScreens
 
         LinkLabel restartGame;
         LinkLabel mainMenu;
+        LinkLabel endGame;
 
         SpriteFont endGameFont;
 
@@ -70,6 +71,13 @@ namespace RagolRogueLike.GameScreens
             mainMenu.Selected += menuItem_Selected;
 
             ControlManager.Add(mainMenu);
+
+            endGame = new LinkLabel();
+            endGame.Text = "Exit";
+            endGame.Size = endGame.SpriteFont.MeasureString(endGame.Text);
+            endGame.Selected += menuItem_Selected;
+
+            ControlManager.Add(endGame);
 
             ControlManager.NextControl();
 
@@ -124,6 +132,11 @@ namespace RagolRogueLike.GameScreens
             if (sender == mainMenu)
             {
                 StateManager.ChangeState(GameRef.startMenuScreen);
+            }
+
+            if (sender == endGame)
+            {
+                GameRef.Exit();
             }
         }
 

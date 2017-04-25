@@ -28,6 +28,7 @@ namespace RagolRogueLike.PlayerClasses
         string Class;
         string gender;
 
+        ItemManager equipped;
         ItemManager inventory;
         bool menuOpen;
 
@@ -82,6 +83,11 @@ namespace RagolRogueLike.PlayerClasses
             get { return inventory; }
         }
 
+        public ItemManager Equipped
+        {
+            get { return equipped; }
+        }
+
         public bool MenuOpen
         {
             get { return menuOpen; }
@@ -123,11 +129,12 @@ namespace RagolRogueLike.PlayerClasses
             menuOpen = false;
 
             inventory = new ItemManager();
+            equipped = new ItemManager();
 
             camera = new Camera(viewportRect);
 
             damage = 10;
-            maxHealth = 20;
+            maxHealth = 100;
             currentHealth = maxHealth;
         }
 
@@ -228,6 +235,7 @@ namespace RagolRogueLike.PlayerClasses
                         {
                             blocked = true;
                             DealDamage(entity);
+                            hasActed = true;
                             break;
                         }
                     }

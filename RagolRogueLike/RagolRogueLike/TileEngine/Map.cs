@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using RagolRogueLike.PlayerClasses;
 using RagolRogueLike.Entities;
+using RagolRogueLike.GameObject;
 
 
 namespace RagolRogueLike.TileEngine
@@ -118,7 +119,7 @@ namespace RagolRogueLike.TileEngine
         #region Method Region
 
         //TODO: Add background color to tiles.
-        public void Draw(SpriteBatch spriteBatch, Camera camera, Player player, EntityManager entities)
+        public void Draw(SpriteBatch spriteBatch, Camera camera, Player player, EntityManager entities, ItemManager items)
         {
             Point cameraPoint = Engine.VectorToCell(camera.Position * (1 / camera.Zoom));
             Point viewPoint = Engine.VectorToCell(new Vector2((camera.Position.X + camera.ViewportRectangle.Width) * (1 / camera.Zoom), (camera.Position.Y + camera.ViewportRectangle.Height) * (1 / camera.Zoom)));
@@ -157,6 +158,19 @@ namespace RagolRogueLike.TileEngine
                                 break;
                             }
                             if (entity.Position == tiles[x, y].Position)
+                            {
+                                spaceOccupied = true;
+                                break;
+                            }
+                        }
+
+                        foreach (Item item in items.Items)
+                        {
+                            if (spaceOccupied)
+                            {
+                                break;
+                            }
+                            if (item.Position == tiles[x, y].Position)
                             {
                                 spaceOccupied = true;
                                 break;

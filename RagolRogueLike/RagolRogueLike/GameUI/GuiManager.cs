@@ -64,6 +64,7 @@ namespace RagolRogueLike.GameUI
             menuFont = Content.Load<SpriteFont>(@"Fonts\MenuFont");
         }
 
+        //TODO: add in items that are being stood on display on the side view.
         public void DrawSideView(SpriteBatch spriteBatch)
         {
             gameRef.GraphicsDevice.Viewport = sideViewport;
@@ -105,6 +106,7 @@ namespace RagolRogueLike.GameUI
 
             //TODO: Add in the equipped area of the inventory.
             spriteBatch.DrawString(menuFont, "Equipped: ", new Vector2(520, 38), Color.White);
+
         }
 
         //Used to create a white rectangle that can be colored when drawn.

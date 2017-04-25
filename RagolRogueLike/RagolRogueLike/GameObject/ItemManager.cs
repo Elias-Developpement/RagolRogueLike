@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using RagolRogueLike.Entities;
+using RagolRogueLike.PlayerClasses;
+
 
 namespace RagolRogueLike.GameObject
 {
@@ -38,11 +41,45 @@ namespace RagolRogueLike.GameObject
 
         #region Method Region  
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, EntityManager entities, Player player)
         {
+
             foreach (Item item in items)
             {
-                item.Draw(spriteBatch);
+                bool spaceOccupied = false;
+
+                foreach (Entity entity in entities.Entities)
+                {
+                    if (item.Position == entity.Position)
+                    {
+                        spaceOccupied = true;
+                        break;
+                    }
+                }
+
+                foreach (Entity entity in entities.DeadEntities)
+                {
+                    if (spaceOccupied)
+                    {
+                        break;
+                    }
+
+                    if (item.Position == entity.Position)
+                    {
+                        spaceOccupied = true;
+                        break;
+                    }
+                }
+
+                if (!spaceOccupied && player.Position == item.Position)
+                {
+                    spaceOccupied = true;
+                }
+
+                if (!spaceOccupied)
+                {
+                    item.Draw(spriteBatch);
+                }
             }
         }
 
@@ -51,7 +88,6 @@ namespace RagolRogueLike.GameObject
             items.Add(item);
             item.ManagerID = items.Count - 1;
         }
-
 
         public void RemoveItem(Item item)
         {
