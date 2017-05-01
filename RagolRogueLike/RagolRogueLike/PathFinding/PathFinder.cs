@@ -13,6 +13,7 @@ using RagolRogueLike.Entities;
 
 namespace RagolRogueLike.PathFinding
 {
+    //Standard A* algorithm for pathfinding.
     public class PathFinder
     {
         #region Field Region
@@ -42,7 +43,6 @@ namespace RagolRogueLike.PathFinding
             //This should create the map into tiles of the proper size 16*16.
             mapWidth = Map.MapWidthInPixels / numberNodesInTile;
             mapHeight = Map.MapHeightInPixels / numberNodesInTile;
-
             InitializeSearchNodes(tiles);
 
         }
@@ -50,10 +50,8 @@ namespace RagolRogueLike.PathFinding
         #endregion
 
         #region Method Region
-
-        //TODO: Probably refactor all of this stuff into making non walkable nodes not null
-        //So that entities can walk.
         
+        //Currently unused but may be subbed in later on.
         private void MakeEntityLocationsBlocked(EntityManager manager)
         {
             //Loop through the entities
@@ -158,7 +156,7 @@ namespace RagolRogueLike.PathFinding
             }
 
             //Step 1: Clear everything from last time and set the positions of map entities.
-            MakeEntityLocationsBlocked(manager);
+            //MakeEntityLocationsBlocked(manager);
             ResetSearchNodes();
 
             //TODO: Problem with making entities position null and then trying to use the start node.
