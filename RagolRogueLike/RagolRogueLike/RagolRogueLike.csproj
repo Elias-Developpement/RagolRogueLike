@@ -67,11 +67,8 @@
     <Compile Include="InputHandler.cs" />
     <Compile Include="MapGenerator\BasicDungeon.cs" />
     <Compile Include="MapGenerator\CellularAutomata.cs" />
-    <Compile Include="PathFinding\BresenhamLine.cs" />
-    <Compile Include="PathFinding\DiamondFOV.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\SearchNode.cs" />
-    <Compile Include="PathFinding\Visibility.cs" />
     <Compile Include="PlayerClasses\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

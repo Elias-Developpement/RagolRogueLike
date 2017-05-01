@@ -98,7 +98,7 @@ namespace RagolRogueLike.Entities
             if (canAct)
             {
                 //TODO: Make collision detection better as well as pathfinding.
-                path = manager.Pathfinder.FindPath(position.ToPoint(), player.Position.ToPoint());
+                path = manager.Pathfinder.FindPath(position.ToPoint(), player.Position.ToPoint(), manager);
                 Vector2 playerPosition = player.Position;
 
                 if (path.Count != 0)

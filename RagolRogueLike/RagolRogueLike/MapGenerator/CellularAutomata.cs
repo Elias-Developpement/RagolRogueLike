@@ -151,11 +151,12 @@ namespace RagolRogueLike.MapGenerator
         {
             int wallCounter = 0;
 
-            for (int startX = x - 1; startX < x + 1; startX++)
+            for (int startX = x - 1; startX <= x + 1; startX++)
             {
-                for (int startY = y - 1; startY < y + 1; startY++)
+                for (int startY = y - 1; startY <= y + 1; startY++)
                 {
-                    if (IsWall(x, y))
+                    
+                    if (IsWall(startX, startY))
                     {
                         wallCounter++;
                     }

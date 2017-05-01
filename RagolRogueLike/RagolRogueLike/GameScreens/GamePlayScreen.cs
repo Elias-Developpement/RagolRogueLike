@@ -39,6 +39,8 @@ namespace RagolRogueLike.GameScreens
         Viewport messageViewport;
 
         bool InventoryOpen = false;
+        bool GameEnd = false;
+        bool addedMessage = false;
         
 
         #endregion
@@ -90,6 +92,7 @@ namespace RagolRogueLike.GameScreens
             messageViewport.Width = 3 * messageViewport.Width / 4;
             messageViewport.Y = mapViewport.Height;
 
+            TestMessages();
             gui = new GuiManager(player, statsViewport, messageViewport, GameRef);
 
             base.LoadContent();
@@ -108,7 +111,22 @@ namespace RagolRogueLike.GameScreens
 
             if (player.CurrentHealth <= 0)
             {
-                StateManager.PushState(GameRef.endGameScreen);
+                if (!addedMessage)
+                {
+                    MessageHandler.AddMessage("You have died. Press enter to continue.");
+                    addedMessage = true;
+                }
+
+                if (InputHandler.KeyReleased(Keys.Enter))
+                {
+                    GameEnd = true;
+                }
+
+                if (GameEnd)
+                {
+                    StateManager.PushState(GameRef.endGameScreen);
+                }
+                
             }
         }
 
@@ -160,10 +178,22 @@ namespace RagolRogueLike.GameScreens
         internal void RestartGame(playerInfo choices)
         {
             LoadContent();
+            GameEnd = false;
 
             player.SetClass = choices.Class;
             player.Race = choices.race;
             player.Gender = choices.gender;
+        }
+
+
+        private void TestMessages()
+        {
+            MessageHandler.AddMessage("Test");
+            MessageHandler.AddMessage("Test");
+            MessageHandler.AddMessage("Test");
+            MessageHandler.AddMessage("Test");
+            MessageHandler.AddMessage("Test");
+            MessageHandler.AddMessage("Test");
         }
 
         #endregion

@@ -85,8 +85,10 @@ namespace RagolRogueLike.GameUI
 
             //Bound for the message Viewport, probs will change as well.
             DrawMessageBorder(spriteBatch);
-            
-            spriteBatch.DrawString(guiFont, "test", new Vector2(5, 5), Color.White);
+
+            //Draw the messages and handle deleting of them
+            DrawMessages(spriteBatch);
+
         }
 
         public void DrawInventory(SpriteBatch spriteBatch)
@@ -139,6 +141,20 @@ namespace RagolRogueLike.GameUI
         {
             spriteBatch.Draw(RectTexture, new Rectangle(0, 0, 768, 96), Color.White);
             spriteBatch.Draw(RectTexture, new Rectangle(3, 3, 765, 90), Color.Black);
+        }
+
+        private void DrawMessages(SpriteBatch spriteBatch)
+        {
+            //Get the number of messages currently in the message container.
+            int messageCount = MessageHandler.messages.Count;
+
+            //Loop through and draw the messages
+            for (int m = 0; m < messageCount; m++)
+            {
+                spriteBatch.DrawString(guiFont, MessageHandler.messages[m], new Vector2(5, 5 + (m * 20)), Color.White);
+            }
+            //Currently can hold 4 messages in the box. 
+            //Find a way to deal with deleting messages that have already been written after an amount of time.
         }
 
         #endregion

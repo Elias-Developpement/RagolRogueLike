@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace RagolRogueLike.GameUI
 {
     public static class MessageHandler
@@ -11,7 +12,7 @@ namespace RagolRogueLike.GameUI
         #region Field Region
 
         //Holds the messages and will be used to display and remove message from the list.
-        public static List<string> messages;
+        public static List<string> messages = new List<string>();
 
         #endregion
         
@@ -33,9 +34,8 @@ namespace RagolRogueLike.GameUI
             messages.Add(message);
         }
 
-        //TODO: Add in how to handle drawing the message and deleting it from the list.
+        //TODO: Add in how to handle deleting messages from the list.
 
-        
         #endregion
     }
 }

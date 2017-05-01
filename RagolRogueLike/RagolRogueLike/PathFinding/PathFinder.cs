@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using RagolRogueLike.TileEngine;
+using RagolRogueLike.Entities;
 
 
 namespace RagolRogueLike.PathFinding
@@ -49,6 +50,22 @@ namespace RagolRogueLike.PathFinding
         #endregion
 
         #region Method Region
+
+        //TODO: Probably refactor all of this stuff into making non walkable nodes not null
+        //So that entities can walk.
+        
+        private void MakeEntityLocationsBlocked(EntityManager manager)
+        {
+            //Loop through the entities
+            foreach (Entity entity in manager.Entities)
+            {
+                //If this entity blocks a position.
+                if (entity.Block)
+                {
+                    searchNodes[(int)entity.Position.X / 16, (int)entity.Position.Y / 16] = null;
+                }
+            }
+        }
 
         private void InitializeSearchNodes(Tile[,] tiles)
         {
@@ -132,7 +149,7 @@ namespace RagolRogueLike.PathFinding
         }
 
         //Finds the optimal path from one point to another
-        public List<Vector2> FindPath(Point startPoint, Point endPoint)
+        public List<Vector2> FindPath(Point startPoint, Point endPoint, EntityManager manager)
         {
             //Only try to find a path if the start and end are different
             if (startPoint == endPoint)
@@ -140,9 +157,11 @@ namespace RagolRogueLike.PathFinding
                 return new List<Vector2>();
             }
 
-            //Step 1: Clear everything from last time
+            //Step 1: Clear everything from last time and set the positions of map entities.
+            //MakeEntityLocationsBlocked(manager);
             ResetSearchNodes();
 
+            //TODO: Problem with making entities position null and then trying to use the start node.
             //Store reference to start and end nodes for convenience
             SearchNode startNode = searchNodes[startPoint.X / 16, startPoint.Y / 16];
             SearchNode endNode = searchNodes[endPoint.X / 16, endPoint.Y / 16];

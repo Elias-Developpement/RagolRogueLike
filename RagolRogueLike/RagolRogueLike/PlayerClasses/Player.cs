@@ -23,6 +23,7 @@ namespace RagolRogueLike.PlayerClasses
         Color color;
         bool block;
         bool hasActed = false;
+        bool canAct = true;
 
         string race;
         string Class;
@@ -134,7 +135,7 @@ namespace RagolRogueLike.PlayerClasses
             camera = new Camera(viewportRect);
 
             damage = 10;
-            maxHealth = 100;
+            maxHealth = 5;
             currentHealth = maxHealth;
         }
 
@@ -171,82 +172,85 @@ namespace RagolRogueLike.PlayerClasses
                 if (camera.CameraMode == CameraMode.Follow)
                     camera.LockToPlayer(this);
             }
-            
-            if (InputHandler.KeyPressed(Keys.Space))
-            {
-                hasActed = true;
-            }
 
-            Vector2 motion = new Vector2();
-            //Here the motion is set to 16 because the size (including spacing) for symbols is 16.
-            if (InputHandler.KeyPressed(Keys.NumPad8) || InputHandler.KeyPressed(Keys.Up))
+            if (canAct)
             {
-                motion.Y = -16;
-            }
-            else if (InputHandler.KeyPressed(Keys.NumPad2) || InputHandler.KeyPressed(Keys.Down))
-            {
-                motion.Y = 16;
-            }
-            else if (InputHandler.KeyPressed(Keys.NumPad4) || InputHandler.KeyPressed(Keys.Left))
-            {
-                motion.X = -16;
-            }
-            else if (InputHandler.KeyPressed(Keys.NumPad6) || InputHandler.KeyPressed(Keys.Right))
-            {
-                motion.X = 16;
-            }
-            else if (InputHandler.KeyPressed(Keys.NumPad7))
-            {
-                motion.Y = -16;
-                motion.X = -16;
-            }
-            else if (InputHandler.KeyPressed(Keys.NumPad9))
-            {
-                motion.Y = -16;
-                motion.X = 16;
-            }
-            else if (InputHandler.KeyPressed(Keys.NumPad1))
-            {
-                motion.Y = 16;
-                motion.X = -16;
-            }
-            else if (InputHandler.KeyPressed(Keys.NumPad3))
-            {
-                motion.Y = 16;
-                motion.X = 16;
-            }
-
-            if (!menuOpen)
-            {
-                if (motion != Vector2.Zero)
+                if (InputHandler.KeyPressed(Keys.Space))
                 {
-                    int x = ((int)position.X + (int)motion.X) / 16;
-                    int y = ((int)position.Y + (int)motion.Y) / 16;
-                    bool blocked = false;
+                    hasActed = true;
+                }
 
-                    if (map.GetBlocked(x, y))
-                    {
-                        blocked = true;
-                    }
+                Vector2 motion = new Vector2();
+                //Here the motion is set to 16 because the size (including spacing) for symbols is 16.
+                if (InputHandler.KeyPressed(Keys.NumPad8) || InputHandler.KeyPressed(Keys.Up))
+                {
+                    motion.Y = -16;
+                }
+                else if (InputHandler.KeyPressed(Keys.NumPad2) || InputHandler.KeyPressed(Keys.Down))
+                {
+                    motion.Y = 16;
+                }
+                else if (InputHandler.KeyPressed(Keys.NumPad4) || InputHandler.KeyPressed(Keys.Left))
+                {
+                    motion.X = -16;
+                }
+                else if (InputHandler.KeyPressed(Keys.NumPad6) || InputHandler.KeyPressed(Keys.Right))
+                {
+                    motion.X = 16;
+                }
+                else if (InputHandler.KeyPressed(Keys.NumPad7))
+                {
+                    motion.Y = -16;
+                    motion.X = -16;
+                }
+                else if (InputHandler.KeyPressed(Keys.NumPad9))
+                {
+                    motion.Y = -16;
+                    motion.X = 16;
+                }
+                else if (InputHandler.KeyPressed(Keys.NumPad1))
+                {
+                    motion.Y = 16;
+                    motion.X = -16;
+                }
+                else if (InputHandler.KeyPressed(Keys.NumPad3))
+                {
+                    motion.Y = 16;
+                    motion.X = 16;
+                }
 
-                    foreach (Entity entity in entities.Entities)
+                if (!menuOpen)
+                {
+                    if (motion != Vector2.Zero)
                     {
-                        if ((position + motion) == entity.Position && entity.Block)
+                        int x = ((int)position.X + (int)motion.X) / 16;
+                        int y = ((int)position.Y + (int)motion.Y) / 16;
+                        bool blocked = false;
+
+                        if (map.GetBlocked(x, y))
                         {
                             blocked = true;
-                            DealDamage(entity);
-                            hasActed = true;
-                            break;
                         }
-                    }
 
-                    if (blocked == false)
-                    {
-                        position += motion;
-                        hasActed = true;
-                    }
+                        foreach (Entity entity in entities.Entities)
+                        {
+                            if ((position + motion) == entity.Position && entity.Block)
+                            {
+                                blocked = true;
+                                DealDamage(entity);
+                                hasActed = true;
+                                break;
+                            }
+                        }
 
-                    camera.LockToPlayer(this);
+                        if (blocked == false)
+                        {
+                            position += motion;
+                            hasActed = true;
+                        }
+
+                        camera.LockToPlayer(this);
+                    }
                 }
             }
         }
@@ -277,7 +281,7 @@ namespace RagolRogueLike.PlayerClasses
             {
                 color = Color.Red;
                 block = false;
-                //TODO: Make the game end if health is zero.
+                canAct = false;
             }
             else if (currentHealth > maxHealth)
             {
