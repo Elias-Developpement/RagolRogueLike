@@ -62,7 +62,7 @@ namespace RagolRogueLike.PathFinding
                 //If this entity blocks a position.
                 if (entity.Block)
                 {
-                    searchNodes[(int)entity.Position.X / 16, (int)entity.Position.Y / 16] = null;
+                    searchNodes[(int)entity.Position.X / 16, (int)entity.Position.Y / 16].Walkable = false;
                 }
             }
         }
@@ -158,7 +158,7 @@ namespace RagolRogueLike.PathFinding
             }
 
             //Step 1: Clear everything from last time and set the positions of map entities.
-            //MakeEntityLocationsBlocked(manager);
+            MakeEntityLocationsBlocked(manager);
             ResetSearchNodes();
 
             //TODO: Problem with making entities position null and then trying to use the start node.
