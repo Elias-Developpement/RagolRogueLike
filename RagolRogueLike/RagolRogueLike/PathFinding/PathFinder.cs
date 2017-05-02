@@ -253,6 +253,7 @@ namespace RagolRogueLike.PathFinding
             return Math.Abs(point1.X - point2.X) + Math.Abs(point1.Y - point2.Y);
         }
 
+
         //Reset the state of the seach nodes
         private void ResetSearchNodes()
         {
